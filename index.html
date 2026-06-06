@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VΛULT — Cinema Redefined</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#07070a;
+  --surface:#0e0e14;
+  --card:#13131a;
+  --border:rgba(255,255,255,0.07);
+  --white:#f0eee8;
+  --muted:#6b6878;
+  --neon:#00ff88;
+  --neon2:#ff3cac;
+  --neon3:#7b2fff;
+  --electric:#00d4ff;
+  --amber:#ffb800;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--white);
+  font-family:'Syne',sans-serif;
+  overflow-x:hidden;
+  cursor:none;
+}
+/* CURSOR */
+#cur{width:8px;height:8px;background:var(--neon);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transition:width .2s,height .2s,background .2s}
+#cur2{width:36px;height:36px;border:1.5px solid var(--neon);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transition:all .1s ease;opacity:.5}
+body:has(a:hover) #cur,body:has(button:hover) #cur{width:16px;height:16px;background:var(--neon2)}
+/* SCANLINES */
+body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);pointer-events:none;z-index:9000}
+
+/* ====== NAV ====== */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:0 40px;height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(7,7,10,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;
+  letter-spacing:0.15em;color:var(--white);text-decoration:none;
+  display:flex;align-items:center;gap:10px;
+}
+.nav-logo-dot{width:8px;height:8px;background:var(--neon);border-radius:50%;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;
+  letter-spacing:.15em;color:var(--muted);text-decoration:none;
+  text-transform:uppercase;transition:color .2s;
+}
+.nav-links a:hover{color:var(--neon)}
+.nav-right{display:flex;align-items:center;gap:16px}
+.nav-btn{
+  padding:8px 20px;background:var(--neon);color:#000;
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  border:none;cursor:none;transition:all .2s;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+}
+.nav-btn:hover{background:var(--neon2);color:#fff}
+
+/* ====== HERO ====== */
+.hero{
+  min-height:100vh;
+  display:grid;grid-template-columns:1fr 1fr;
+  padding-top:64px;overflow:hidden;position:relative;
+}
+.hero-left{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:80px 60px;position:relative;z-index:2;
+}
+.hero-tag{
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  letter-spacing:.3em;color:var(--neon);text-transform:uppercase;
+  margin-bottom:24px;display:flex;align-items:center;gap:12px;
+}
+.hero-tag::before{content:'';width:30px;height:1px;background:var(--neon)}
+.hero-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(3.5rem,7vw,6rem);
+  line-height:.95;letter-spacing:-.02em;
+  margin-bottom:32px;
+}
+.hero-title .line2{font-style:italic;color:var(--neon2)}
+.hero-title .line3{
+  -webkit-text-stroke:1px rgba(255,255,255,0.2);
+  color:transparent;
+  display:block;
+}
+.hero-desc{
+  font-size:1rem;line-height:1.7;color:var(--muted);
+  max-width:380px;margin-bottom:48px;
+}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.btn-glitch{
+  padding:14px 32px;background:transparent;
+  border:1px solid var(--neon);color:var(--neon);
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;
+  font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  cursor:none;text-decoration:none;position:relative;overflow:hidden;
+  transition:all .3s;display:inline-block;
+}
+.btn-glitch::before{
+  content:attr(data-text);position:absolute;inset:0;
+  background:var(--neon);color:#000;
+  display:flex;align-items:center;justify-content:center;
+  transform:translateX(-100%);transition:transform .3s;
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;
+  font-weight:700;letter-spacing:.2em;
+}
+.btn-glitch:hover::before{transform:translateX(0)}
+.btn-solid{
+  padding:14px 32px;background:var(--neon2);color:#fff;
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;
+  font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  border:none;cursor:none;text-decoration:none;
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
+  transition:all .3s;display:inline-block;
+}
+.btn-solid:hover{background:var(--neon3)}
+.hero-stats{
+  margin-top:60px;padding-top:40px;
+  border-top:1px solid var(--border);
+  display:flex;gap:48px;
+}
+.stat{}
+.stat-n{
+  font-family:'DM Serif Display',serif;font-size:2.5rem;
+  color:var(--white);
+}
+.stat-n span{color:var(--neon);font-size:1.5rem}
+.stat-l{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  letter-spacing:.2em;color:var(--muted);text-transform:uppercase;
+  margin-top:4px;
+}
+
+.hero-right{position:relative;overflow:hidden}
+.hero-featured-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg, rgba(0,255,136,0.05) 0%, rgba(255,60,172,0.08) 50%, rgba(123,47,255,0.05) 100%);
+}
+.hero-poster-stack{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.hero-main-poster{
+  width:260px;height:390px;position:relative;z-index:3;
+  border-radius:4px;overflow:hidden;
+  box-shadow:0 40px 80px rgba(0,0,0,0.8), 0 0 60px rgba(255,60,172,0.2);
+  transform:rotate(-2deg);animation:float 6s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:rotate(-2deg) translateY(0)}50%{transform:rotate(-2deg) translateY(-12px)}}
+.hero-main-poster img{width:100%;height:100%;object-fit:cover}
+.poster-side{
+  position:absolute;width:180px;height:270px;border-radius:4px;overflow:hidden;
+  box-shadow:0 20px 40px rgba(0,0,0,0.6);
+}
+.poster-side img{width:100%;height:100%;object-fit:cover}
+.ps1{left:60px;top:50%;transform:translateY(-50%) rotate(4deg);z-index:2;filter:brightness(.6)}
+.ps2{right:60px;top:50%;transform:translateY(-50%) rotate(-5deg);z-index:2;filter:brightness(.6)}
+.hero-glow{
+  position:absolute;width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,60,172,.15) 0%,transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  pointer-events:none;
+}
+
+/* ====== CATEGORY TABS ====== */
+.category-bar{
+  position:sticky;top:64px;z-index:900;
+  background:rgba(7,7,10,.95);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:0 40px;
+  display:flex;align-items:center;gap:0;
+  overflow-x:auto;scrollbar-width:none;
+}
+.category-bar::-webkit-scrollbar{display:none}
+.cat-tab{
+  padding:18px 28px;
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);background:transparent;border:none;
+  cursor:none;white-space:nowrap;position:relative;
+  transition:color .2s;
+  display:flex;align-items:center;gap:8px;
+}
+.cat-tab::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:var(--neon);transform:scaleX(0);transition:transform .3s;
+}
+.cat-tab.active{color:var(--white)}
+.cat-tab.active::after{transform:scaleX(1)}
+.cat-tab:hover{color:var(--white)}
+.cat-emoji{font-size:1rem}
+.cat-divider{width:1px;height:30px;background:var(--border);flex-shrink:0;margin:0 8px}
+
+/* ====== MAIN CONTENT ====== */
+.content-area{padding:0 40px 80px}
+
+/* ====== GENRE FILTER ====== */
+.genre-bar{
+  padding:32px 0 24px;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.genre-pill{
+  padding:8px 18px;background:transparent;
+  border:1px solid var(--border);color:var(--muted);
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  letter-spacing:.1em;text-transform:uppercase;cursor:none;
+  border-radius:100px;transition:all .2s;white-space:nowrap;
+}
+.genre-pill:hover{border-color:var(--neon);color:var(--neon)}
+.genre-pill.active{background:var(--neon);border-color:var(--neon);color:#000;font-weight:700}
+.genre-pill.g-horror.active{background:var(--neon2);border-color:var(--neon2);color:#fff}
+.genre-pill.g-romance.active{background:#ff6b9d;border-color:#ff6b9d;color:#fff}
+.genre-pill.g-adventure.active{background:var(--amber);border-color:var(--amber);color:#000}
+.genre-pill.g-scifi.active{background:var(--electric);border-color:var(--electric);color:#000}
+.genre-pill.g-comedy.active{background:#ffdd57;border-color:#ffdd57;color:#000}
+.genre-pill.g-fantasy.active{background:var(--neon3);border-color:var(--neon3);color:#fff}
+.genre-pill.g-drama.active{background:#e67e22;border-color:#e67e22;color:#fff}
+.genre-pill.g-action.active{background:#e74c3c;border-color:#e74c3c;color:#fff}
+.genre-pill.g-animation.active{background:#1abc9c;border-color:#1abc9c;color:#000}
+
+/* section header */
+.section-head{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  padding:48px 0 28px;border-top:1px solid var(--border);margin-top:16px;
+}
+.section-head:first-of-type{border-top:none;margin-top:0}
+.sh-left{}
+.sh-label{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  letter-spacing:.3em;text-transform:uppercase;
+  margin-bottom:8px;
+}
+.sh-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(2rem,4vw,3rem);line-height:1;
+}
+.sh-count{
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  letter-spacing:.2em;color:var(--muted);
+  padding:6px 14px;border:1px solid var(--border);
+}
+.see-all{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--neon);
+  text-decoration:none;display:flex;align-items:center;gap:8px;
+  transition:gap .2s;
+}
+.see-all:hover{gap:14px}
+
+/* ====== MOVIE GRID ====== */
+.movies-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:20px;
+}
+.movie-card{
+  position:relative;cursor:none;
+  border-radius:6px;overflow:hidden;
+  background:var(--card);
+  transition:transform .4s cubic-bezier(0.34,1.56,0.64,1);
+  border:1px solid transparent;
+}
+.movie-card:hover{
+  transform:translateY(-8px) scale(1.02);
+  border-color:rgba(255,255,255,0.1);
+  z-index:10;
+}
+.movie-poster{
+  aspect-ratio:2/3;overflow:hidden;position:relative;
+  background:#1a1a22;
+}
+.movie-poster img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .6s ease,filter .6s ease;
+  filter:brightness(0.9);
+}
+.movie-card:hover .movie-poster img{
+  transform:scale(1.08);filter:brightness(1.1);
+}
+.movie-card:hover .movie-overlay{opacity:1}
+.movie-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(7,7,10,.98) 0%,rgba(7,7,10,.4) 50%,transparent 100%);
+  opacity:0;transition:opacity .4s;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:20px 16px;
+}
+.movie-play{
+  width:44px;height:44px;border:2px solid var(--neon);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--neon);font-size:.9rem;margin-bottom:12px;
+  transition:all .2s;
+}
+.movie-play:hover{background:var(--neon);color:#000}
+.movie-actions{display:flex;gap:8px;margin-top:10px}
+.ma-btn{
+  flex:1;padding:7px 4px;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.1);color:var(--white);
+  font-family:'JetBrains Mono',monospace;font-size:.55rem;
+  letter-spacing:.1em;text-transform:uppercase;cursor:none;
+  transition:all .2s;text-align:center;
+}
+.ma-btn:hover{background:var(--neon);color:#000;border-color:var(--neon)}
+.ma-btn.book{background:var(--neon2);border-color:var(--neon2);color:#fff}
+.ma-btn.book:hover{background:#fff;color:var(--neon2)}
+
+/* genre badge */
+.genre-badge{
+  position:absolute;top:10px;left:10px;
+  padding:4px 10px;border-radius:100px;
+  font-family:'JetBrains Mono',monospace;font-size:.5rem;
+  letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+  z-index:2;
+}
+.gb-horror{background:var(--neon2);color:#fff}
+.gb-comedy{background:#ffdd57;color:#000}
+.gb-romance{background:#ff6b9d;color:#fff}
+.gb-adventure{background:var(--amber);color:#000}
+.gb-scifi{background:var(--electric);color:#000}
+.gb-fantasy{background:var(--neon3);color:#fff}
+.gb-drama{background:#e67e22;color:#fff}
+.gb-action{background:#e74c3c;color:#fff}
+.gb-animation{background:#1abc9c;color:#000}
+.gb-thriller{background:#8e44ad;color:#fff}
+.gb-mystery{background:#2980b9;color:#fff}
+
+/* rating badge */
+.rating-badge{
+  position:absolute;top:10px;right:10px;
+  background:rgba(0,0,0,.7);backdrop-filter:blur(10px);
+  padding:4px 8px;border-radius:4px;
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  color:var(--amber);z-index:2;border:1px solid rgba(255,184,0,.2);
+}
+
+.movie-info{padding:14px 14px 16px}
+.movie-title{
+  font-family:'Syne',sans-serif;font-weight:700;
+  font-size:.95rem;line-height:1.3;
+  margin-bottom:6px;color:var(--white);
+}
+.movie-meta{
+  display:flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;font-size:.58rem;
+  color:var(--muted);
+}
+.meta-sep{opacity:.3}
+.movie-showtimes{
+  margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;
+}
+.showtime{
+  padding:4px 10px;background:rgba(0,255,136,.05);
+  border:1px solid rgba(0,255,136,.15);color:var(--neon);
+  font-family:'JetBrains Mono',monospace;font-size:.55rem;
+  cursor:none;transition:all .2s;border-radius:2px;
+}
+.showtime:hover{background:var(--neon);color:#000}
+
+/* ====== FEATURED BIG CARD ====== */
+.featured-banner{
+  position:relative;border-radius:8px;overflow:hidden;
+  height:420px;margin:40px 0;cursor:none;
+  border:1px solid var(--border);
+}
+.fb-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(to right, rgba(7,7,10,1) 40%,rgba(7,7,10,.3) 100%),
+  linear-gradient(to top, rgba(7,7,10,1) 0%,transparent 60%);
+  z-index:1;
+}
+.fb-img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  filter:brightness(.5) saturate(1.3);
+}
+.fb-content{
+  position:relative;z-index:2;height:100%;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:48px;
+}
+.fb-tag{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  letter-spacing:.3em;text-transform:uppercase;margin-bottom:16px;
+  display:flex;align-items:center;gap:8px;
+}
+.fb-tag::before{content:'';width:20px;height:1px}
+.fb-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(2.5rem,5vw,4rem);line-height:.95;
+  margin-bottom:16px;max-width:600px;
+}
+.fb-title em{font-style:italic;color:var(--neon2)}
+.fb-desc{
+  font-size:.95rem;color:var(--muted);line-height:1.7;
+  max-width:500px;margin-bottom:28px;
+}
+.fb-actions{display:flex;gap:12px;align-items:center}
+
+/* ====== PAGE SECTIONS ====== */
+.page-section{display:none}
+.page-section.active{display:block}
+
+/* ====== FOOTER ====== */
+footer{
+  background:var(--surface);
+  border-top:1px solid var(--border);
+  padding:60px 40px 40px;
+}
+.footer-grid{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:60px;margin-bottom:60px;
+}
+.footer-logo-text{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:2rem;letter-spacing:.1em;
+  background:linear-gradient(135deg,var(--neon),var(--neon2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:16px;display:block;
+}
+.footer-about{font-size:.9rem;color:var(--muted);line-height:1.7;max-width:280px}
+.footer-col h4{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--neon);
+  margin-bottom:20px;
+}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+.footer-col a{font-size:.9rem;color:var(--muted);text-decoration:none;transition:color .2s}
+.footer-col a:hover{color:var(--white)}
+.footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:40px;border-top:1px solid var(--border);
+  font-family:'JetBrains Mono',monospace;font-size:.55rem;
+  letter-spacing:.15em;color:var(--muted);text-transform:uppercase;
+}
+.footer-socials{display:flex;gap:20px}
+.fs-link{
+  width:36px;height:36px;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.9rem;text-decoration:none;transition:all .2s;
+  border-radius:4px;
+}
+.fs-link:hover{border-color:var(--neon);background:rgba(0,255,136,.05)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-right{display:none}
+  .hero-left{padding:100px 24px 60px}
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .content-area{padding:0 20px 60px}
+  .category-bar{padding:0 20px}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:40px}
+  footer{padding:40px 20px 30px}
+  .movies-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+}
+
+/* Loading shimmer */
+.shimmer{
+  background:linear-gradient(90deg,var(--card) 25%,rgba(255,255,255,0.04) 50%,var(--card) 75%);
+  background-size:200% 100%;animation:shimmer 1.5s infinite;
+}
+@keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur2"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-dot"></span>VΛULT
+  </a>
+  <ul class="nav-links">
+    <li><a href="#movies-section">Movies</a></li>
+    <li><a href="#cartoons-section">Cartoons</a></li>
+    <li><a href="#anime-section">Anime</a></li>
+    <li><a href="#animation-section">Animation</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-btn">Book Now</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Est. 2025 — Premium Cinema</div>
+    <h1 class="hero-title">
+      Experience<br>
+      <span class="line2">Cinema</span><br>
+      <span class="line3">Differently.</span>
+    </h1>
+    <p class="hero-desc">Movies, cartoons, anime and animation — every genre, every world, all in one place. Escape reality tonight.</p>
+    <div class="hero-actions">
+      <a href="#movies-section" class="btn-glitch" data-text="Browse Films">Browse Films</a>
+      <a href="#" class="btn-solid">Book Tickets</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-n">4K<span>+</span></div><div class="stat-l">Titles</div></div>
+      <div class="stat"><div class="stat-n">12<span>+</span></div><div class="stat-l">Genres</div></div>
+      <div class="stat"><div class="stat-n">8<span>×</span></div><div class="stat-l">Screens</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-featured-bg"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-poster-stack">
+      <div class="poster-side ps1">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGwPgY4_pbAqcGcmJhSpYadbZ2TVVNI9P8pg&s" alt="Dune" loading="lazy">
+      </div>
+      <div class="hero-main-poster">
+        <img src="https://image.tmdb.org/t/p/w400/d5NXSklXo0qyIYkgV94XAgMIckC.jpg" alt="Inception" loading="lazy">
+      </div>
+      <div class="poster-side ps2">
+        <img src="https://i.ebayimg.com/00/s/MTU5OVgxMTk2/z/HtsAAOSwNKhoS-lE/$_57.PNG?set_id=880000500F" alt="Avengers" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORY TABS -->
+<div class="category-bar" id="catBar">
+  <button class="cat-tab active" data-cat="movies">🎬 <span>Movies</span></button>
+  <div class="cat-divider"></div>
+  <button class="cat-tab" data-cat="cartoons">🎨 <span>Cartoons</span></button>
+  <div class="cat-divider"></div>
+  <button class="cat-tab" data-cat="anime">⛩️ <span>Anime</span></button>
+  <div class="cat-divider"></div>
+  <button class="cat-tab" data-cat="animation">✨ <span>Animation</span></button>
+</div>
+
+<!-- ===== MAIN CONTENT ===== -->
+<div class="content-area">
+
+  <!-- ========== MOVIES ========== -->
+  <div class="page-section active" id="movies-section" data-cat="movies">
+
+    <!-- Genre pills -->
+    <div class="genre-bar" id="movies-genres">
+      <button class="genre-pill active" data-genre="all">All Genres</button>
+      <button class="genre-pill g-action" data-genre="action">💥 Action</button>
+      <button class="genre-pill g-horror" data-genre="horror">😱 Horror</button>
+      <button class="genre-pill g-comedy" data-genre="comedy">😂 Comedy</button>
+      <button class="genre-pill g-romance" data-genre="romance">💕 Romance</button>
+      <button class="genre-pill g-adventure" data-genre="adventure">🗺️ Adventure</button>
+      <button class="genre-pill g-scifi" data-genre="scifi">🚀 Sci-Fi</button>
+      <button class="genre-pill g-fantasy" data-genre="fantasy">🔮 Fantasy</button>
+      <button class="genre-pill g-drama" data-genre="drama">🎭 Drama</button>
+      <button class="genre-pill g-thriller" data-genre="thriller">🔪 Thriller</button>
+    </div>
+
+    <!-- Featured Banner -->
+    <div class="featured-banner reveal">
+      <img class="fb-img" src="https://i.pinimg.com/736x/e6/f2/75/e6f275217f498cf65794cff8c066da32.jpg" alt="Dune" loading="lazy">
+      <div class="fb-bg"></div>
+      <div class="fb-content">
+        <div class="fb-tag" style="color:var(--amber)">★ Featured This Week</div>
+        <h2 class="fb-title">Dune: <em>Part Two</em></h2>
+        <p class="fb-desc">Paul Atreides unites with the Fremen and begins a journey of revenge against those who destroyed his family. But he must choose between the love of his life and the fate of the universe.</p>
+        <div class="fb-actions">
+          <a href="#" class="btn-solid" style="clip-path:none;padding:12px 28px">▶ Watch Trailer</a>
+          <a href="#" class="btn-glitch" data-text="Book Seats" style="padding:12px 28px">Book Seats</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTION -->
+    <div class="section-head reveal" data-section="action">
+      <div class="sh-left">
+        <div class="sh-label" style="color:#e74c3c">💥 Action</div>
+        <h3 class="sh-title">Action & Thrills</h3>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <span class="sh-count">8 Films</span>
+        <a href="#" class="see-all">See All →</a>
+      </div>
+    </div>
+    <div class="movies-grid reveal" data-filter-section="action">
+      <!-- Mad Max -->
+      <div class="movie-card" data-genre="action">
+        <div class="movie-poster">
+          <img src="https://image.tmdb.org/t/p/w300/8tZYtuWezp8JbcsvHYO0O46tFbo.jpg" alt="Mad Max" loading="lazy">
+          <span class="genre-badge gb-action">Action</span>
+          <span class="rating-badge">★ 8.1</span>
+          <div class="movie-overlay">
+            <div class="movie-play">▶</div>
+            <div class="movie-actions">
+              <button class="ma-btn">Trailer</button>
+              <button class="ma-btn book">Book</button>
+            </div>
+          </div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Mad Max: Fury Road</div>
+          <div class="movie-meta"><span>2015</span><span class="meta-sep">·</span><span>2h</span></div>
+          <div class="movie-showtimes">
+            <button class="showtime">14:00</button>
+            <button class="showtime">19:30</button>
+            <button class="showtime">22:15</button>
+          </div>
+        </div>
+      </div>
+      <!-- Top Gun -->
+      <div class="movie-card" data-genre="action">
+        <div class="movie-poster">
+          <img src="https://image.tmdb.org/t/p/w300/62HCnUTziyWcpDaBO2i1DX17ljH.jpg" alt="Top Gun" loading="lazy">
+          <span class="genre-badge gb-action">Action</span>
+          <span class="rating-badge">★ 8.3</span>
+          <div class="movie-overlay">
+            <div class="movie-play">▶</div>
+            <div class="movie-actions">
+              <button class="ma-btn">Trailer</button>
+              <button class="ma-btn book">Book</button>
+            </div>
+          </div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Top Gun: Maverick</div>
+          <div class="movie-meta"><span>2022</span><span class="meta-sep">·</span><span>2h 11m</span></div>
+          <div class="movie-showtimes">
+            <button class="showtime">13:30</button>
+            <button class="showtime">17:00</button>
+            <button class="showtime">21:00</button>
+          </div>
+        </div>
+      </div>
+      <!-- Avengers -->
+      <div class="movie-card" data-genre="action">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/736x/67/91/b3/6791b331f134fa878b6c66e9b9d833c2.jpg" alt="Avengers" loading="lazy">
+          <span class="genre-badge gb-action">Action</span>
+          <span class="rating-badge">★ 8.4</span>
+          <div class="movie-overlay">
+            <div class="movie-play">▶</div>
+            <div class="movie-actions">
+              <button class="ma-btn">Trailer</button>
+              <button class="ma-btn book">Book</button>
+            </div>
+          </div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Avengers: Endgame</div>
+          <div class="movie-meta"><span>2019</span><span class="meta-sep">·</span><span>3h 1m</span></div>
+          <div class="movie-showtimes">
+            <button class="showtime">12:00</button>
+            <button class="showtime">16:00</button>
+            <button class="showtime">20:30</button>
+          </div>
+        </div>
+      </div>
+      <!-- John Wick -->
+      <div class="movie-card" data-genre="action">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/1200x/44/af/70/44af701bed952e2fb2b406a9c420c592.jpg" alt="John Wick" loading="lazy">
+          <span class="genre-badge gb-action">Action</span>
+          <span class="rating-badge">★ 7.4</span>
+          <div class="movie-overlay">
+            <div class="movie-play">▶</div>
+            <div class="movie-actions">
+              <button class="ma-btn">Trailer</button>
+              <button class="ma-btn book">Book</button>
+            </div>
+          </div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">John Wick: Ch. 4</div>
+          <div class="movie-meta"><span>2023</span><span class="meta-sep">·</span><span>2h 49m</span></div>
+          <div class="movie-showtimes">
+            <button class="showtime">15:00</button>
+            <button class="showtime">19:00</button>
+            <button class="showtime">23:00</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HORROR -->
+    <div class="section-head reveal">
+      <div class="sh-left">
+        <div class="sh-label" style="color:var(--neon2)">😱 Horror</div>
+        <h3 class="sh-title">Horror & Suspense</h3>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <span class="sh-count">6 Films</span>
+        <a href="#" class="see-all">See All →</a>
+      </div>
+    </div>
+    <div class="movies-grid reveal">
+      <!-- Hereditary -->
+      <div class="movie-card" data-genre="horror">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/1200x/f1/42/78/f14278b8d37d22e5b6f07bc2f1ac20f6.jpg" alt="Hereditary" loading="lazy">
+          <span class="genre-badge gb-horror">Horror</span>
+          <span class="rating-badge">★ 7.3</span>
+          <div class="movie-overlay">
+            <div class="movie-play">▶</div>
+            <div class="movie-actions">
+              <button class="ma-btn">Trailer</button>
+              <button class="ma-btn book">Book</button>
+            </div>
+          </div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Hereditary</div>
+          <div class="movie-meta"><span>2018</span><span class="meta-sep">·</span><span>2h 7m</span></div>
+          <div class="movie-showtimes">
+            <button class="showtime">20:00</button>
+            <button class="showtime">23:00</button>
+          </div>
+        </div>
+      </div>
+      <!-- Get Out -->
+      <div class="movie-card" data-genre="horror">
+        <div class="movie-poster">
+          <img src="https://image.tmdb.org/t/p/w300/tFXcEccSQMf3lfhfXKSU9iRBpa3.jpg" alt="Get Out" loading="lazy">
+          <span class="genre-badge gb-horror">Horror</span>
+          <span class="rating-badge">★ 7.7</span>
+          <div class="movie-overlay">
+            <div class="movie-play">▶</div>
+            <div class="movie-actions">
+              <button class="ma-btn">Trailer</button>
+              <button class="ma-btn book">Book</button>
+            </div>
+          </div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Get Out</div>
+          <div class="movie-meta"><span>2017</span><span class="meta-sep">·</span><span>1h 44m</span></div>
+          <div class="movie-showtimes">
+            <button class="showtime">18:30</button>
+            <button class="showtime">21:30</button>
+          </div>
+        </div>
+      </div>
+      <!-- Sinister -->
+      <div class="movie-card" data-genre="horror">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/736x/91/3b/a9/913ba95c74c17632c2cad56de448540a.jpg" alt="Sinister" loading="lazy">
+          <span class="genre-badge gb-horror">Horror</span>
+          <span class="rating-badge">★ 6.8</span>
+          <div class="movie-overlay">
+            <div class="movie-play">▶</div>
+            <div class="movie-actions">
+              <button class="ma-btn">Trailer</button>
+              <button class="ma-btn book">Book</button>
+            </div>
+          </div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Sinister</div>
+          <div class="movie-meta"><span>2012</span><span class="meta-sep">·</span><span>1h 50m</span></div>
+          <div class="movie-showtimes">
+            <button class="showtime">21:00</button>
+            <button class="showtime">23:30</button>
+          </div>
+        </div>
+      </div>
+      <!-- Midsommar -->
+      <div class="movie-card" data-genre="horror">
+        <div class="movie-poster">
+          <img src="https://image.tmdb.org/t/p/w300/7LEI8ulZzO5gy9Ww2NVCrKmHeDZ.jpg" alt="Midsommar" loading="lazy">
+          <span class="genre-badge gb-horror">Horror</span>
+          <span class="rating-badge">★ 7.1</span>
+          <div class="movie-overlay">
+            <div class="movie-play">▶</div>
+            <div class="movie-actions">
+              <button class="ma-btn">Trailer</button>
+              <button class="ma-btn book">Book</button>
+            </div>
+          </div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Midsommar</div>
+          <div class="movie-meta"><span>2019</span><span class="meta-sep">·</span><span>2h 28m</span></div>
+          <div class="movie-showtimes">
+            <button class="showtime">19:30</button>
+            <button class="showtime">22:30</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMEDY -->
+    <div class="section-head reveal">
+      <div class="sh-left">
+        <div class="sh-label" style="color:#ffdd57">😂 Comedy</div>
+        <h3 class="sh-title">Comedy & Fun</h3>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <span class="sh-count">5 Films</span>
+        <a href="#" class="see-all">See All →</a>
+      </div>
+    </div>
+    <div class="movies-grid reveal">
+      <!-- Superbad -->
+      <div class="movie-card" data-genre="comedy">
+        <div class="movie-poster">
+          <img src="https://image.tmdb.org/t/p/w300/ek8e8txUyUwd2BNqj6lFEerJfbq.jpg" alt="Superbad" loading="lazy">
+          <span class="genre-badge gb-comedy">Comedy</span>
+          <span class="rating-badge">★ 7.6</span>
+          <div class="movie-overlay">
+            <div class="movie-play">▶</div>
+            <div class="movie-actions">
+              <button class="ma-btn">Trailer</button>
+              <button class="ma-btn book">Book</button>
+            </div>
+          </div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Superbad</div>
+          <div class="movie-meta"><span>2007</span><span class="meta-sep">·</span><span>1h 53m</span></div>
+          <div class="movie-showtimes">
+            <button class="showtime">15:30</button>
+            <button class="showtime">19:00</button>
+          </div>
+        </div>
+      </div>
+      <!-- The Grand Budapest -->
+      <div class="movie-card" data-genre="comedy">
+        <div class="movie-poster">
+          <img src="https://image.tmdb.org/t/p/w300/eWdyYQreja6JGCzqHWXpWHDrrPo.jpg" alt="Grand Budapest" loading="lazy">
+          <span class="genre-badge gb-comedy">Comedy</span>
+          <span class="rating-badge">★ 8.1</span>
+          <div class="movie-overlay">
+            <div class="movie-play">▶</div>
+            <div class="movie-actions">
+              <button class="ma-btn">Trailer</button>
+              <button class="ma-btn book">Book</button>
+            </div>
+          </div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Grand Budapest Hotel</div>
+          <div class="movie-meta"><span>2014</span><span class="meta-sep">·</span><span>1h 39m</span></div>
+          <div class="movie-showtimes">
+            <button class="showtime">14:00</button>
+            <button class="showtime">17:30</button>
+          </div>
+        </div>
+      </div>
+      <!-- Everything Everywhere -->
+      <div class="movie-card" data-genre="comedy">
+        <div class="movie-poster">
+          <img src="https://image.tmdb.org/t/p/w300/w3LxiVYdWWRvEVdn5RYq6jIqkb1.jpg" alt="Everything Everywhere" loading="lazy">
+          <span class="genre-badge gb-comedy">Comedy</span>
+          <span class="rating-badge">★ 7.8</span>
+          <div class="movie-overlay">
+            <div class="movie-play">▶</div>
+            <div class="movie-actions">
+              <button class="ma-btn">Trailer</button>
+              <button class="ma-btn book">Book</button>
+            </div>
+          </div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Everything Everywhere</div>
+          <div class="movie-meta"><span>2022</span><span class="meta-sep">·</span><span>2h 19m</span></div>
+          <div class="movie-showtimes">
+            <button class="showtime">13:00</button>
+            <button class="showtime">16:30</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROMANCE -->
+    <div class="section-head reveal">
+      <div class="sh-left">
+        <div class="sh-label" style="color:#ff6b9d">💕 Romance</div>
+        <h3 class="sh-title">Romance & Drama</h3>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <span class="sh-count">5 Films</span>
+        <a href="#" class="see-all">See All →</a>
+      </div>
+    </div>
+    <div class="movies-grid reveal">
+      <div class="movie-card" data-genre="romance">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/736x/60/a9/e4/60a9e4adb00c7cf666ec5b32969e9ead.jpg" alt="La La Land" loading="lazy">
+          <span class="genre-badge gb-romance">Romance</span>
+          <span class="rating-badge">★ 8.0</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">La La Land</div>
+          <div class="movie-meta"><span>2016</span><span class="meta-sep">·</span><span>2h 8m</span></div>
+          <div class="movie-showtimes"><button class="showtime">16:00</button><button class="showtime">19:30</button></div>
+        </div>
+      </div>
+      <div class="movie-card" data-genre="romance">
+        <div class="movie-poster">
+          <img src="https://m.media-amazon.com/images/S/pv-target-images/7b41c5d28a0f3e52e25870eda4f6b3220831b2add81795b94e35dee851faa31e.jpg" alt="Titanic" loading="lazy">
+          <span class="genre-badge gb-romance">Romance</span>
+          <span class="rating-badge">★ 7.9</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Titanic</div>
+          <div class="movie-meta"><span>1997</span><span class="meta-sep">·</span><span>3h 14m</span></div>
+          <div class="movie-showtimes"><button class="showtime">12:30</button><button class="showtime">17:00</button></div>
+        </div>
+      </div>
+      <div class="movie-card" data-genre="romance">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/1200x/e4/c1/c8/e4c1c8cb085f72a691dfe8b5afcb052c.jpg" alt="Before Sunrise" loading="lazy">
+          <span class="genre-badge gb-romance">Romance</span>
+          <span class="rating-badge">★ 8.1</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Before Sunrise</div>
+          <div class="movie-meta"><span>1995</span><span class="meta-sep">·</span><span>1h 41m</span></div>
+          <div class="movie-showtimes"><button class="showtime">15:00</button><button class="showtime">18:00</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCI-FI -->
+    <div class="section-head reveal">
+      <div class="sh-left">
+        <div class="sh-label" style="color:var(--electric)">🚀 Sci-Fi</div>
+        <h3 class="sh-title">Science Fiction</h3>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <span class="sh-count">6 Films</span>
+        <a href="#" class="see-all">See All →</a>
+      </div>
+    </div>
+    <div class="movies-grid reveal">
+      <div class="movie-card" data-genre="scifi">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/1200x/b0/ae/a4/b0aea49646879a043ad9f6ec3002e99f.jpg" alt="Inception" loading="lazy">
+          <span class="genre-badge gb-scifi">Sci-Fi</span>
+          <span class="rating-badge">★ 8.8</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Inception</div>
+          <div class="movie-meta"><span>2010</span><span class="meta-sep">·</span><span>2h 28m</span></div>
+          <div class="movie-showtimes"><button class="showtime">14:30</button><button class="showtime">18:00</button><button class="showtime">21:30</button></div>
+        </div>
+      </div>
+      <div class="movie-card" data-genre="scifi">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/736x/6c/57/fd/6c57fd7f62e881cc20faea7bd3e2a3f6.jpg" alt="Dune" loading="lazy">
+          <span class="genre-badge gb-scifi">Sci-Fi</span>
+          <span class="rating-badge">★ 8.0</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Dune: Part One</div>
+          <div class="movie-meta"><span>2021</span><span class="meta-sep">·</span><span>2h 35m</span></div>
+          <div class="movie-showtimes"><button class="showtime">13:00</button><button class="showtime">17:30</button><button class="showtime">22:00</button></div>
+        </div>
+      </div>
+      <div class="movie-card" data-genre="scifi">
+        <div class="movie-poster">
+          <img src="https://image.tmdb.org/t/p/w300/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg" alt="Interstellar" loading="lazy">
+          <span class="genre-badge gb-scifi">Sci-Fi</span>
+          <span class="rating-badge">★ 8.6</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Interstellar</div>
+          <div class="movie-meta"><span>2014</span><span class="meta-sep">·</span><span>2h 49m</span></div>
+          <div class="movie-showtimes"><button class="showtime">14:00</button><button class="showtime">18:30</button></div>
+        </div>
+      </div>
+      <div class="movie-card" data-genre="scifi">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/1200x/03/73/da/0373da6818cdc9c94ea006c5a8229523.jpg" alt="The Matrix" loading="lazy">
+          <span class="genre-badge gb-scifi">Sci-Fi</span>
+          <span class="rating-badge">★ 8.7</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">The Matrix</div>
+          <div class="movie-meta"><span>1999</span><span class="meta-sep">·</span><span>2h 16m</span></div>
+          <div class="movie-showtimes"><button class="showtime">15:30</button><button class="showtime">20:00</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADVENTURE/FANTASY -->
+    <div class="section-head reveal">
+      <div class="sh-left">
+        <div class="sh-label" style="color:var(--neon3)">🔮 Fantasy & Adventure</div>
+        <h3 class="sh-title">Fantasy Worlds</h3>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <span class="sh-count">5 Films</span>
+        <a href="#" class="see-all">See All →</a>
+      </div>
+    </div>
+    <div class="movies-grid reveal">
+      <div class="movie-card" data-genre="fantasy">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/1200x/54/df/c2/54dfc2793ff75f8ab487e910a822a948.jpg" alt="Lord of the Rings" loading="lazy">
+          <span class="genre-badge gb-fantasy">Fantasy</span>
+          <span class="rating-badge">★ 8.9</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Lord of the Rings</div>
+          <div class="movie-meta"><span>2001</span><span class="meta-sep">·</span><span>3h 28m</span></div>
+          <div class="movie-showtimes"><button class="showtime">12:00</button><button class="showtime">17:00</button></div>
+        </div>
+      </div>
+      <div class="movie-card" data-genre="adventure">
+        <div class="movie-poster">
+          <img src="https://image.tmdb.org/t/p/w300/jRXYjXNq0Cs2TcJjLkki24MLp7u.jpg" alt="Avatar" loading="lazy">
+          <span class="genre-badge gb-adventure">Adventure</span>
+          <span class="rating-badge">★ 8.5</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Avatar</div>
+          <div class="movie-meta"><span>1981</span><span class="meta-sep">·</span><span>1h 55m</span></div>
+          <div class="movie-showtimes"><button class="showtime">14:00</button><button class="showtime">18:00</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== CARTOONS ========== -->
+  <div class="page-section" id="cartoons-section" data-cat="cartoons">
+    <div class="genre-bar">
+      <button class="genre-pill active" data-genre="all">All Cartoons</button>
+      <button class="genre-pill g-comedy" data-genre="comedy">😂 Comedy</button>
+      <button class="genre-pill g-adventure" data-genre="adventure">🗺️ Adventure</button>
+      <button class="genre-pill g-fantasy" data-genre="fantasy">🔮 Fantasy</button>
+      <button class="genre-pill g-animation" data-genre="family">👨‍👩‍👧 Family</button>
+    </div>
+    <div class="featured-banner reveal">
+      <img class="fb-img" src="https://i.pinimg.com/736x/3b/c0/49/3bc04997a108ec8700bce15787fb092b.jpg" alt="Tom and Jerry" loading="lazy" style="object-position:top">
+      <div class="fb-bg"></div>
+      <div class="fb-content">
+        <div class="fb-tag" style="color:#ffdd57">🎨 Fan Favourite</div>
+        <h2 class="fb-title">Classic <em>Cartoons</em></h2>
+        <p class="fb-desc">Relive the golden age of animation. Timeless laughs, iconic characters, pure childhood magic on the big screen.</p>
+        <div class="fb-actions">
+          <a href="#" class="btn-solid" style="clip-path:none;padding:12px 28px;background:#ffdd57;color:#000">▶ Play Now</a>
+        </div>
+      </div>
+    </div>
+    <div class="section-head reveal">
+      <div class="sh-left">
+        <div class="sh-label" style="color:#ffdd57">😂 Comedy Cartoons</div>
+        <h3 class="sh-title">Laugh Out Loud</h3>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <span class="sh-count">6 Shows</span>
+        <a href="#" class="see-all">See All →</a>
+      </div>
+    </div>
+    <div class="movies-grid reveal">
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/736x/9d/f4/65/9df465257c13dcc6b22e1b89f184be24.jpg" alt="Tom and Jerry" loading="lazy">
+          <span class="genre-badge gb-comedy">Comedy</span>
+          <span class="rating-badge">★ 7.5</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Tom & Jerry</div>
+          <div class="movie-meta"><span>Classic</span><span class="meta-sep">·</span><span>All Ages</span></div>
+          <div class="movie-showtimes"><button class="showtime">10:00</button><button class="showtime">14:00</button></div>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/736x/0f/d3/b0/0fd3b00fe5e87d56bce65a035086191a.jpg" alt="Shrek" loading="lazy">
+          <span class="genre-badge gb-comedy">Comedy</span>
+          <span class="rating-badge">★ 7.9</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Shrek</div>
+          <div class="movie-meta"><span>2001</span><span class="meta-sep">·</span><span>1h 30m</span></div>
+          <div class="movie-showtimes"><button class="showtime">11:00</button><button class="showtime">15:00</button></div>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/736x/47/c1/11/47c1115fdf3a67f3bff8359b50f7ab12.jpg" alt="Minions" loading="lazy">
+          <span class="genre-badge gb-comedy">Comedy</span>
+          <span class="rating-badge">★ 6.4</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Minions</div>
+          <div class="movie-meta"><span>2015</span><span class="meta-sep">·</span><span>1h 31m</span></div>
+          <div class="movie-showtimes"><button class="showtime">10:30</button><button class="showtime">13:30</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head reveal">
+      <div class="sh-left">
+        <div class="sh-label" style="color:var(--amber)">🗺️ Adventure Cartoons</div>
+        <h3 class="sh-title">Epic Adventures</h3>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <span class="sh-count">4 Films</span>
+        <a href="#" class="see-all">See All →</a>
+      </div>
+    </div>
+    <div class="movies-grid reveal">
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/736x/3b/23/87/3b2387292fb0374d3597a9bd45bde79f.jpg" alt="How to Train Your Dragon" loading="lazy">
+          <span class="genre-badge gb-adventure">Adventure</span>
+          <span class="rating-badge">★ 8.1</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">How to Train Your Dragon</div>
+          <div class="movie-meta"><span>2010</span><span class="meta-sep">·</span><span>1h 38m</span></div>
+          <div class="movie-showtimes"><button class="showtime">12:00</button><button class="showtime">16:00</button></div>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/736x/f7/9f/28/f79f28d0c5e5d73daa13b332b580e817.jpg" alt="Kung Fu Panda" loading="lazy">
+          <span class="genre-badge gb-adventure">Adventure</span>
+          <span class="rating-badge">★ 7.6</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Kung Fu Panda</div>
+          <div class="movie-meta"><span>2008</span><span class="meta-sep">·</span><span>1h 32m</span></div>
+          <div class="movie-showtimes"><button class="showtime">10:00</button><button class="showtime">14:30</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== ANIME ========== -->
+  <div class="page-section" id="anime-section" data-cat="anime">
+    <div class="genre-bar">
+      <button class="genre-pill active" data-genre="all">All Anime</button>
+      <button class="genre-pill g-action" data-genre="action">⚔️ Shonen</button>
+      <button class="genre-pill g-romance" data-genre="romance">💕 Romance</button>
+      <button class="genre-pill g-fantasy" data-genre="fantasy">🔮 Fantasy</button>
+      <button class="genre-pill g-scifi" data-genre="scifi">🤖 Mecha</button>
+      <button class="genre-pill g-horror" data-genre="horror">👹 Dark</button>
+    </div>
+
+    <div class="featured-banner reveal" style="border-color:rgba(255,60,172,.2)">
+      <img class="fb-img" src="https://i.pinimg.com/1200x/77/fc/96/77fc96283a4ad15609f8abe83d398425.jpg" alt="Demon Slayer" loading="lazy">
+      <div class="fb-bg"></div>
+      <div class="fb-content">
+        <div class="fb-tag" style="color:var(--neon2)">⛩️ Anime Premiere</div>
+        <h2 class="fb-title">Demon Slayer: <em>Mugen Train</em></h2>
+        <p class="fb-desc">Tanjiro and friends embark on a new mission aboard the Mugen Train. A record-breaking cinematic phenomenon.</p>
+        <div class="fb-actions">
+          <a href="#" class="btn-solid" style="clip-path:none;padding:12px 28px;background:var(--neon2)">▶ Watch Now</a>
+          <a href="#" class="btn-glitch" data-text="Book Seats" style="padding:12px 28px;border-color:var(--neon2);color:var(--neon2)">Book Seats</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head reveal">
+      <div class="sh-left">
+        <div class="sh-label" style="color:var(--neon2)">⚔️ Shonen Action</div>
+        <h3 class="sh-title">Battle Anime</h3>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <span class="sh-count">7 Films</span>
+        <a href="#" class="see-all">See All →</a>
+      </div>
+    </div>
+    <div class="movies-grid reveal">
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/736x/81/c7/9c/81c79cb8cfcb320fb7890403fc9bc81d.jpg" alt="Demon Slayer" loading="lazy">
+          <span class="genre-badge gb-action">Shonen</span>
+          <span class="rating-badge">★ 8.3</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Demon Slayer Movie</div>
+          <div class="movie-meta"><span>2020</span><span class="meta-sep">·</span><span>1h 57m</span></div>
+          <div class="movie-showtimes"><button class="showtime">14:00</button><button class="showtime">18:00</button><button class="showtime">21:30</button></div>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/1200x/99/ef/83/99ef837028463d4f940b63c2b288222b.jpg" alt="Jujutsu Kaisen" loading="lazy">
+          <span class="genre-badge gb-action">Shonen</span>
+          <span class="rating-badge">★ 8.7</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Jujutsu Kaisen 0</div>
+          <div class="movie-meta"><span>2021</span><span class="meta-sep">·</span><span>1h 45m</span></div>
+          <div class="movie-showtimes"><button class="showtime">15:30</button><button class="showtime">19:30</button></div>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/1200x/46/8b/ac/468baccda1af6b7abc94e6740708c5a5.jpg" alt="Naruto" loading="lazy">
+          <span class="genre-badge gb-action">Shonen</span>
+          <span class="rating-badge">★ 8.4</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Naruto: Road to Ninja</div>
+          <div class="movie-meta"><span>2012</span><span class="meta-sep">·</span><span>1h 49m</span></div>
+          <div class="movie-showtimes"><button class="showtime">13:00</button><button class="showtime">17:00</button></div>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/1200x/f1/63/60/f16360166bb294131a504d61503673ed.jpg" alt="Dragon Ball" loading="lazy">
+          <span class="genre-badge gb-action">Shonen</span>
+          <span class="rating-badge">★ 7.9</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Dragon Ball Super: Broly</div>
+          <div class="movie-meta"><span>2018</span><span class="meta-sep">·</span><span>1h 41m</span></div>
+          <div class="movie-showtimes"><button class="showtime">14:30</button><button class="showtime">18:30</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head reveal">
+      <div class="sh-left">
+        <div class="sh-label" style="color:var(--neon3)">🔮 Fantasy Anime</div>
+        <h3 class="sh-title">Magical Worlds</h3>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <span class="sh-count">5 Films</span>
+        <a href="#" class="see-all">See All →</a>
+      </div>
+    </div>
+    <div class="movies-grid reveal">
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="https://image.tmdb.org/t/p/w300/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg" alt="Spirited Away" loading="lazy">
+          <span class="genre-badge gb-fantasy">Fantasy</span>
+          <span class="rating-badge">★ 9.3</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Spirited Away</div>
+          <div class="movie-meta"><span>2001</span><span class="meta-sep">·</span><span>2h 4m</span></div>
+          <div class="movie-showtimes"><button class="showtime">13:00</button><button class="showtime">17:00</button><button class="showtime">20:30</button></div>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/736x/62/1f/a3/621fa391eb10f4196393f684ccb5175d.jpg" alt="Princess Mononoke" loading="lazy">
+          <span class="genre-badge gb-fantasy">Fantasy</span>
+          <span class="rating-badge">★ 8.4</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Princess Mononoke</div>
+          <div class="movie-meta"><span>1997</span><span class="meta-sep">·</span><span>2h 13m</span></div>
+          <div class="movie-showtimes"><button class="showtime">14:00</button><button class="showtime">18:30</button></div>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/1200x/2a/6d/69/2a6d69cdcf5fccfa79b4cb9e4da1c04f.jpg" alt="Your Name" loading="lazy">
+          <span class="genre-badge gb-romance">Romance</span>
+          <span class="rating-badge">★ 8.4</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Your Name</div>
+          <div class="movie-meta"><span>2016</span><span class="meta-sep">·</span><span>1h 52m</span></div>
+          <div class="movie-showtimes"><button class="showtime">16:00</button><button class="showtime">19:00</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== ANIMATION ========== -->
+  <div class="page-section" id="animation-section" data-cat="animation">
+    <div class="genre-bar">
+      <button class="genre-pill active" data-genre="all">All Animation</button>
+      <button class="genre-pill g-adventure" data-genre="adventure">🗺️ Adventure</button>
+      <button class="genre-pill g-comedy" data-genre="comedy">😂 Comedy</button>
+      <button class="genre-pill g-fantasy" data-genre="fantasy">🔮 Fantasy</button>
+      <button class="genre-pill g-drama" data-genre="drama">🎭 Drama</button>
+    </div>
+
+    <div class="featured-banner reveal" style="border-color:rgba(26,188,156,.2)">
+      <img class="fb-img" src="https://i.pinimg.com/1200x/6c/56/ea/6c56ea63d31cc1b529fdc35e2a879999.jpg" alt="Inside Out" loading="lazy">
+      <div class="fb-bg"></div>
+      <div class="fb-content">
+        <div class="fb-tag" style="color:#1abc9c">✨ Animation Spotlight</div>
+        <h2 class="fb-title">Inside <em>Out 2</em></h2>
+        <p class="fb-desc">Riley faces the challenges of adolescence as new emotions — including Anxiety — arrive and threaten to overshadow old ones. A Pixar masterpiece.</p>
+        <div class="fb-actions">
+          <a href="#" class="btn-solid" style="clip-path:none;padding:12px 28px;background:#1abc9c;color:#000">▶ Watch Now</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head reveal">
+      <div class="sh-left">
+        <div class="sh-label" style="color:#1abc9c">✨ Pixar & Disney</div>
+        <h3 class="sh-title">Animation Masterpieces</h3>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <span class="sh-count">8 Films</span>
+        <a href="#" class="see-all">See All →</a>
+      </div>
+    </div>
+    <div class="movies-grid reveal">
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/1200x/6c/56/ea/6c56ea63d31cc1b529fdc35e2a879999.jpg" alt="Inside Out 2" loading="lazy">
+          <span class="genre-badge gb-animation">Pixar</span>
+          <span class="rating-badge">★ 7.8</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Inside Out 2</div>
+          <div class="movie-meta"><span>2024</span><span class="meta-sep">·</span><span>1h 40m</span></div>
+          <div class="movie-showtimes"><button class="showtime">11:00</button><button class="showtime">15:00</button><button class="showtime">18:30</button></div>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/1200x/35/88/1d/35881d86ffc9d9cdd995a9d0eeb26ef8.jpg" alt="The Lion King" loading="lazy">
+          <span class="genre-badge gb-animation">Disney</span>
+          <span class="rating-badge">★ 8.5</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">The Lion King</div>
+          <div class="movie-meta"><span>1994</span><span class="meta-sep">·</span><span>1h 28m</span></div>
+          <div class="movie-showtimes"><button class="showtime">10:30</button><button class="showtime">14:00</button></div>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/736x/a1/6c/89/a16c89e3dcd2bbc3d19c1c23ceaf266d.jpg" alt="Coco" loading="lazy">
+          <span class="genre-badge gb-animation">Pixar</span>
+          <span class="rating-badge">★ 8.4</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Coco</div>
+          <div class="movie-meta"><span>2017</span><span class="meta-sep">·</span><span>1h 45m</span></div>
+          <div class="movie-showtimes"><button class="showtime">12:00</button><button class="showtime">16:30</button></div>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/736x/fe/5f/37/fe5f373cb46a1cafd7e82dd3b5b3a44c.jpg" alt="Moana" loading="lazy">
+          <span class="genre-badge gb-animation">Disney</span>
+          <span class="rating-badge">★ 7.6</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Moana</div>
+          <div class="movie-meta"><span>2016</span><span class="meta-sep">·</span><span>1h 47m</span></div>
+          <div class="movie-showtimes"><button class="showtime">11:30</button><button class="showtime">15:30</button></div>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/736x/46/7d/94/467d9422c34a27a813e84d4da80a0cb1.jpg" alt="Spider-Man Spider-Verse" loading="lazy">
+          <span class="genre-badge gb-adventure">Adventure</span>
+          <span class="rating-badge">★ 8.6</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Spider-Verse</div>
+          <div class="movie-meta"><span>2018</span><span class="meta-sep">·</span><span>1h 57m</span></div>
+          <div class="movie-showtimes"><button class="showtime">13:00</button><button class="showtime">17:30</button><button class="showtime">21:00</button></div>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">
+          <img src="https://i.pinimg.com/736x/cd/f0/2f/cdf02fbb3554e09507bad8789e238b26.jpg" alt="Frozen" loading="lazy">
+          <span class="genre-badge gb-fantasy">Fantasy</span>
+          <span class="rating-badge">★ 7.4</span>
+          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">Frozen</div>
+          <div class="movie-meta"><span>2013</span><span class="meta-sep">·</span><span>1h 42m</span></div>
+          <div class="movie-showtimes"><button class="showtime">10:00</button><button class="showtime">14:00</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end content-area -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <span class="footer-logo-text">VΛULT</span>
+      <p class="footer-about">Premium cinema — movies, cartoons, anime and animation all in one place. Every genre. Every world. Every night.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Watch</h4>
+      <ul>
+        <li><a href="#">Movies</a></li>
+        <li><a href="#">Cartoons</a></li>
+        <li><a href="#">Anime</a></li>
+        <li><a href="#">Animation</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Genres</h4>
+      <ul>
+        <li><a href="#">Action</a></li>
+        <li><a href="#">Horror</a></li>
+        <li><a href="#">Comedy</a></li>
+        <li><a href="#">Romance</a></li>
+        <li><a href="#">Sci-Fi</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Visit</h4>
+      <ul>
+        <li><a href="#">Book Tickets</a></li>
+        <li><a href="#">Membership</a></li>
+        <li><a href="#">Gift Cards</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 VΛULT Cinema</span>
+    <div class="footer-socials">
+      <a class="fs-link" href="#">𝕏</a>
+      <a class="fs-link" href="#">ig</a>
+      <a class="fs-link" href="#">yt</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ——— Cursor ———
+const cur = document.getElementById('cur');
+const cur2 = document.getElementById('cur2');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX; my=e.clientY;
+  cur.style.cssText=`left:${mx-4}px;top:${my-4}px`;
+});
+(function loop(){
+  rx+=(mx-rx)*.1; ry+=(my-ry)*.1;
+  cur2.style.cssText=`left:${rx-18}px;top:${ry-18}px`;
+  requestAnimationFrame(loop);
+})();
+document.querySelectorAll('a,button,.movie-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.transform='scale(2.5)';cur2.style.opacity='.9';cur2.style.transform='scale(1.5)'});
+  el.addEventListener('mouseleave',()=>{cur.style.transform='scale(1)';cur2.style.opacity='.5';cur2.style.transform='scale(1)'});
+});
+
+// ——— Category Tabs ———
+document.querySelectorAll('.cat-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.cat-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.page-section').forEach(s=>s.classList.remove('active'));
+    tab.classList.add('active');
+    const cat = tab.dataset.cat;
+    const section = document.getElementById(cat+'-section');
+    if(section) section.classList.add('active');
+    // scroll to content
+    document.querySelector('.content-area').scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+
+// ——— Genre Filter (per section) ———
+document.querySelectorAll('.genre-bar').forEach(bar=>{
+  bar.querySelectorAll('.genre-pill').forEach(pill=>{
+    pill.addEventListener('click',()=>{
+      bar.querySelectorAll('.genre-pill').forEach(p=>p.classList.remove('active'));
+      pill.classList.add('active');
+      const genre = pill.dataset.genre;
+      // find parent section and filter cards
+      const section = pill.closest('.page-section');
+      if(!section) return;
+      section.querySelectorAll('.movie-card').forEach(card=>{
+        if(genre==='all'||card.dataset.genre===genre||!card.dataset.genre){
+          card.style.display='block';
+        } else {
+          card.style.display='none';
+        }
+      });
+    });
+  });
+});
+
+// ——— Scroll Reveal ———
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('in'), i*80);
+      obs.unobserve(e.target);
+    }
+  });
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
