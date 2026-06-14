@@ -3,1527 +3,1178 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VΛULT — Cinema Redefined</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+<title>OPTICA — Fine Eyewear</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:#07070a;
-  --surface:#0e0e14;
-  --card:#13131a;
-  --border:rgba(255,255,255,0.07);
-  --white:#f0eee8;
-  --muted:#6b6878;
-  --neon:#00ff88;
-  --neon2:#ff3cac;
-  --neon3:#7b2fff;
-  --electric:#00d4ff;
-  --amber:#ffb800;
-}
-html{scroll-behavior:smooth}
-body{
-  background:var(--bg);
-  color:var(--white);
-  font-family:'Syne',sans-serif;
-  overflow-x:hidden;
-  cursor:none;
-}
-/* CURSOR */
-#cur{width:8px;height:8px;background:var(--neon);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transition:width .2s,height .2s,background .2s}
-#cur2{width:36px;height:36px;border:1.5px solid var(--neon);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transition:all .1s ease;opacity:.5}
-body:has(a:hover) #cur,body:has(button:hover) #cur{width:16px;height:16px;background:var(--neon2)}
-/* SCANLINES */
-body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);pointer-events:none;z-index:9000}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ====== NAV ====== */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:1000;
-  padding:0 40px;height:64px;
-  display:flex;align-items:center;justify-content:space-between;
-  background:rgba(7,7,10,0.85);
-  backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
-}
-.nav-logo{
-  font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;
-  letter-spacing:0.15em;color:var(--white);text-decoration:none;
-  display:flex;align-items:center;gap:10px;
-}
-.nav-logo-dot{width:8px;height:8px;background:var(--neon);border-radius:50%;animation:blink 2s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
-.nav-links{display:flex;gap:32px;list-style:none}
-.nav-links a{
-  font-family:'JetBrains Mono',monospace;font-size:.7rem;
-  letter-spacing:.15em;color:var(--muted);text-decoration:none;
-  text-transform:uppercase;transition:color .2s;
-}
-.nav-links a:hover{color:var(--neon)}
-.nav-right{display:flex;align-items:center;gap:16px}
-.nav-btn{
-  padding:8px 20px;background:var(--neon);color:#000;
-  font-family:'JetBrains Mono',monospace;font-size:.65rem;
-  font-weight:700;letter-spacing:.15em;text-transform:uppercase;
-  border:none;cursor:none;transition:all .2s;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
-}
-.nav-btn:hover{background:var(--neon2);color:#fff}
+  :root {
+    --gold: #C9973A;
+    --gold-light: #E8C47A;
+    --black: #0A0A0A;
+    --off-black: #141414;
+    --dark: #1E1E1E;
+    --mid: #3A3A3A;
+    --light: #F5F3EF;
+    --white: #FAFAF8;
+    --text-muted: #888;
+  }
 
-/* ====== HERO ====== */
-.hero{
-  min-height:100vh;
-  display:grid;grid-template-columns:1fr 1fr;
-  padding-top:64px;overflow:hidden;position:relative;
-}
-.hero-left{
-  display:flex;flex-direction:column;justify-content:center;
-  padding:80px 60px;position:relative;z-index:2;
-}
-.hero-tag{
-  font-family:'JetBrains Mono',monospace;font-size:.65rem;
-  letter-spacing:.3em;color:var(--neon);text-transform:uppercase;
-  margin-bottom:24px;display:flex;align-items:center;gap:12px;
-}
-.hero-tag::before{content:'';width:30px;height:1px;background:var(--neon)}
-.hero-title{
-  font-family:'DM Serif Display',serif;
-  font-size:clamp(3.5rem,7vw,6rem);
-  line-height:.95;letter-spacing:-.02em;
-  margin-bottom:32px;
-}
-.hero-title .line2{font-style:italic;color:var(--neon2)}
-.hero-title .line3{
-  -webkit-text-stroke:1px rgba(255,255,255,0.2);
-  color:transparent;
-  display:block;
-}
-.hero-desc{
-  font-size:1rem;line-height:1.7;color:var(--muted);
-  max-width:380px;margin-bottom:48px;
-}
-.hero-actions{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
-.btn-glitch{
-  padding:14px 32px;background:transparent;
-  border:1px solid var(--neon);color:var(--neon);
-  font-family:'JetBrains Mono',monospace;font-size:.7rem;
-  font-weight:700;letter-spacing:.2em;text-transform:uppercase;
-  cursor:none;text-decoration:none;position:relative;overflow:hidden;
-  transition:all .3s;display:inline-block;
-}
-.btn-glitch::before{
-  content:attr(data-text);position:absolute;inset:0;
-  background:var(--neon);color:#000;
-  display:flex;align-items:center;justify-content:center;
-  transform:translateX(-100%);transition:transform .3s;
-  font-family:'JetBrains Mono',monospace;font-size:.7rem;
-  font-weight:700;letter-spacing:.2em;
-}
-.btn-glitch:hover::before{transform:translateX(0)}
-.btn-solid{
-  padding:14px 32px;background:var(--neon2);color:#fff;
-  font-family:'JetBrains Mono',monospace;font-size:.7rem;
-  font-weight:700;letter-spacing:.2em;text-transform:uppercase;
-  border:none;cursor:none;text-decoration:none;
-  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
-  transition:all .3s;display:inline-block;
-}
-.btn-solid:hover{background:var(--neon3)}
-.hero-stats{
-  margin-top:60px;padding-top:40px;
-  border-top:1px solid var(--border);
-  display:flex;gap:48px;
-}
-.stat{}
-.stat-n{
-  font-family:'DM Serif Display',serif;font-size:2.5rem;
-  color:var(--white);
-}
-.stat-n span{color:var(--neon);font-size:1.5rem}
-.stat-l{
-  font-family:'JetBrains Mono',monospace;font-size:.6rem;
-  letter-spacing:.2em;color:var(--muted);text-transform:uppercase;
-  margin-top:4px;
-}
+  html { scroll-behavior: smooth; }
 
-.hero-right{position:relative;overflow:hidden}
-.hero-featured-bg{
-  position:absolute;inset:0;
-  background:linear-gradient(135deg, rgba(0,255,136,0.05) 0%, rgba(255,60,172,0.08) 50%, rgba(123,47,255,0.05) 100%);
-}
-.hero-poster-stack{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-}
-.hero-main-poster{
-  width:260px;height:390px;position:relative;z-index:3;
-  border-radius:4px;overflow:hidden;
-  box-shadow:0 40px 80px rgba(0,0,0,0.8), 0 0 60px rgba(255,60,172,0.2);
-  transform:rotate(-2deg);animation:float 6s ease-in-out infinite;
-}
-@keyframes float{0%,100%{transform:rotate(-2deg) translateY(0)}50%{transform:rotate(-2deg) translateY(-12px)}}
-.hero-main-poster img{width:100%;height:100%;object-fit:cover}
-.poster-side{
-  position:absolute;width:180px;height:270px;border-radius:4px;overflow:hidden;
-  box-shadow:0 20px 40px rgba(0,0,0,0.6);
-}
-.poster-side img{width:100%;height:100%;object-fit:cover}
-.ps1{left:60px;top:50%;transform:translateY(-50%) rotate(4deg);z-index:2;filter:brightness(.6)}
-.ps2{right:60px;top:50%;transform:translateY(-50%) rotate(-5deg);z-index:2;filter:brightness(.6)}
-.hero-glow{
-  position:absolute;width:400px;height:400px;border-radius:50%;
-  background:radial-gradient(circle,rgba(255,60,172,.15) 0%,transparent 70%);
-  top:50%;left:50%;transform:translate(-50%,-50%);
-  pointer-events:none;
-}
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+    cursor: none;
+  }
 
-/* ====== CATEGORY TABS ====== */
-.category-bar{
-  position:sticky;top:64px;z-index:900;
-  background:rgba(7,7,10,.95);backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
-  padding:0 40px;
-  display:flex;align-items:center;gap:0;
-  overflow-x:auto;scrollbar-width:none;
-}
-.category-bar::-webkit-scrollbar{display:none}
-.cat-tab{
-  padding:18px 28px;
-  font-family:'JetBrains Mono',monospace;font-size:.65rem;
-  letter-spacing:.15em;text-transform:uppercase;
-  color:var(--muted);background:transparent;border:none;
-  cursor:none;white-space:nowrap;position:relative;
-  transition:color .2s;
-  display:flex;align-items:center;gap:8px;
-}
-.cat-tab::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
-  background:var(--neon);transform:scaleX(0);transition:transform .3s;
-}
-.cat-tab.active{color:var(--white)}
-.cat-tab.active::after{transform:scaleX(1)}
-.cat-tab:hover{color:var(--white)}
-.cat-emoji{font-size:1rem}
-.cat-divider{width:1px;height:30px;background:var(--border);flex-shrink:0;margin:0 8px}
+  /* CUSTOM CURSOR */
+  .cursor {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.3s, height 0.3s, opacity 0.3s;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(201,151,58,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.15s ease;
+  }
+  .cursor.hovered { width: 20px; height: 20px; }
+  .cursor-ring.hovered { width: 56px; height: 56px; border-color: var(--gold); }
 
-/* ====== MAIN CONTENT ====== */
-.content-area{padding:0 40px 80px}
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 4rem;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+    backdrop-filter: blur(2px);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    border: none;
+    padding: 0.65rem 1.6rem;
+    cursor: none;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.3s;
+  }
+  .nav-cta:hover { background: var(--gold-light); }
 
-/* ====== GENRE FILTER ====== */
-.genre-bar{
-  padding:32px 0 24px;
-  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-}
-.genre-pill{
-  padding:8px 18px;background:transparent;
-  border:1px solid var(--border);color:var(--muted);
-  font-family:'JetBrains Mono',monospace;font-size:.6rem;
-  letter-spacing:.1em;text-transform:uppercase;cursor:none;
-  border-radius:100px;transition:all .2s;white-space:nowrap;
-}
-.genre-pill:hover{border-color:var(--neon);color:var(--neon)}
-.genre-pill.active{background:var(--neon);border-color:var(--neon);color:#000;font-weight:700}
-.genre-pill.g-horror.active{background:var(--neon2);border-color:var(--neon2);color:#fff}
-.genre-pill.g-romance.active{background:#ff6b9d;border-color:#ff6b9d;color:#fff}
-.genre-pill.g-adventure.active{background:var(--amber);border-color:var(--amber);color:#000}
-.genre-pill.g-scifi.active{background:var(--electric);border-color:var(--electric);color:#000}
-.genre-pill.g-comedy.active{background:#ffdd57;border-color:#ffdd57;color:#000}
-.genre-pill.g-fantasy.active{background:var(--neon3);border-color:var(--neon3);color:#fff}
-.genre-pill.g-drama.active{background:#e67e22;border-color:#e67e22;color:#fff}
-.genre-pill.g-action.active{background:#e74c3c;border-color:#e74c3c;color:#fff}
-.genre-pill.g-animation.active{background:#1abc9c;border-color:#1abc9c;color:#000}
+  /* HERO */
+  .hero {
+    height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(201,151,58,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 80%, rgba(201,151,58,0.05) 0%, transparent 50%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    padding: 0 2rem;
+  }
+  .hero-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: ''; display: block; width: 40px; height: 1px; background: var(--gold); opacity: 0.5;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4rem, 9vw, 9rem);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2.5vw, 1.6rem);
+    font-weight: 300;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+  }
+  .hero-actions {
+    display: flex; gap: 1rem; justify-content: center; align-items: center;
+  }
+  .btn-primary {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    border: none;
+    padding: 1rem 2.5rem;
+    cursor: none;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-secondary {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 1rem 2.5rem;
+    cursor: none;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
 
-/* section header */
-.section-head{
-  display:flex;align-items:flex-end;justify-content:space-between;
-  padding:48px 0 28px;border-top:1px solid var(--border);margin-top:16px;
-}
-.section-head:first-of-type{border-top:none;margin-top:0}
-.sh-left{}
-.sh-label{
-  font-family:'JetBrains Mono',monospace;font-size:.6rem;
-  letter-spacing:.3em;text-transform:uppercase;
-  margin-bottom:8px;
-}
-.sh-title{
-  font-family:'DM Serif Display',serif;
-  font-size:clamp(2rem,4vw,3rem);line-height:1;
-}
-.sh-count{
-  font-family:'JetBrains Mono',monospace;font-size:.65rem;
-  letter-spacing:.2em;color:var(--muted);
-  padding:6px 14px;border:1px solid var(--border);
-}
-.see-all{
-  font-family:'JetBrains Mono',monospace;font-size:.6rem;
-  letter-spacing:.15em;text-transform:uppercase;color:var(--neon);
-  text-decoration:none;display:flex;align-items:center;gap:8px;
-  transition:gap .2s;
-}
-.see-all:hover{gap:14px}
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted);
+  }
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 1; transform: scaleY(1); }
+    50% { opacity: 0.4; transform: scaleY(0.6); }
+  }
 
-/* ====== MOVIE GRID ====== */
-.movies-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
-  gap:20px;
-}
-.movie-card{
-  position:relative;cursor:none;
-  border-radius:6px;overflow:hidden;
-  background:var(--card);
-  transition:transform .4s cubic-bezier(0.34,1.56,0.64,1);
-  border:1px solid transparent;
-}
-.movie-card:hover{
-  transform:translateY(-8px) scale(1.02);
-  border-color:rgba(255,255,255,0.1);
-  z-index:10;
-}
-.movie-poster{
-  aspect-ratio:2/3;overflow:hidden;position:relative;
-  background:#1a1a22;
-}
-.movie-poster img{
-  width:100%;height:100%;object-fit:cover;
-  transition:transform .6s ease,filter .6s ease;
-  filter:brightness(0.9);
-}
-.movie-card:hover .movie-poster img{
-  transform:scale(1.08);filter:brightness(1.1);
-}
-.movie-card:hover .movie-overlay{opacity:1}
-.movie-overlay{
-  position:absolute;inset:0;
-  background:linear-gradient(to top,rgba(7,7,10,.98) 0%,rgba(7,7,10,.4) 50%,transparent 100%);
-  opacity:0;transition:opacity .4s;
-  display:flex;flex-direction:column;justify-content:flex-end;
-  padding:20px 16px;
-}
-.movie-play{
-  width:44px;height:44px;border:2px solid var(--neon);border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  color:var(--neon);font-size:.9rem;margin-bottom:12px;
-  transition:all .2s;
-}
-.movie-play:hover{background:var(--neon);color:#000}
-.movie-actions{display:flex;gap:8px;margin-top:10px}
-.ma-btn{
-  flex:1;padding:7px 4px;background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.1);color:var(--white);
-  font-family:'JetBrains Mono',monospace;font-size:.55rem;
-  letter-spacing:.1em;text-transform:uppercase;cursor:none;
-  transition:all .2s;text-align:center;
-}
-.ma-btn:hover{background:var(--neon);color:#000;border-color:var(--neon)}
-.ma-btn.book{background:var(--neon2);border-color:var(--neon2);color:#fff}
-.ma-btn.book:hover{background:#fff;color:var(--neon2)}
+  /* FLOATING GLASSES IN HERO */
+  .hero-glasses-float {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  }
+  .float-frame {
+    position: absolute;
+    opacity: 0.06;
+    animation: floatAnim var(--dur, 8s) ease-in-out infinite var(--delay, 0s);
+  }
+  @keyframes floatAnim {
+    0%, 100% { transform: translateY(0) rotate(var(--rot, -5deg)); }
+    50% { transform: translateY(-20px) rotate(calc(var(--rot, -5deg) + 3deg)); }
+  }
 
-/* genre badge */
-.genre-badge{
-  position:absolute;top:10px;left:10px;
-  padding:4px 10px;border-radius:100px;
-  font-family:'JetBrains Mono',monospace;font-size:.5rem;
-  letter-spacing:.1em;text-transform:uppercase;font-weight:700;
-  z-index:2;
-}
-.gb-horror{background:var(--neon2);color:#fff}
-.gb-comedy{background:#ffdd57;color:#000}
-.gb-romance{background:#ff6b9d;color:#fff}
-.gb-adventure{background:var(--amber);color:#000}
-.gb-scifi{background:var(--electric);color:#000}
-.gb-fantasy{background:var(--neon3);color:#fff}
-.gb-drama{background:#e67e22;color:#fff}
-.gb-action{background:#e74c3c;color:#fff}
-.gb-animation{background:#1abc9c;color:#000}
-.gb-thriller{background:#8e44ad;color:#fff}
-.gb-mystery{background:#2980b9;color:#fff}
+  /* FILTER BAR */
+  .filter-section {
+    padding: 5rem 4rem 2rem;
+    text-align: center;
+  }
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+  }
+  .section-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    max-width: 480px;
+    margin: 0 auto 3rem;
+    line-height: 1.7;
+    letter-spacing: 0.03em;
+  }
+  .filter-tabs {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem;
+    margin-bottom: 4rem;
+  }
+  .filter-tab {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.6rem 1.4rem;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: none;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s;
+  }
+  .filter-tab:hover, .filter-tab.active {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(201,151,58,0.06);
+  }
 
-/* rating badge */
-.rating-badge{
-  position:absolute;top:10px;right:10px;
-  background:rgba(0,0,0,.7);backdrop-filter:blur(10px);
-  padding:4px 8px;border-radius:4px;
-  font-family:'JetBrains Mono',monospace;font-size:.6rem;
-  color:var(--amber);z-index:2;border:1px solid rgba(255,184,0,.2);
-}
+  /* GLASSES GRID */
+  .glasses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1px;
+    background: rgba(255,255,255,0.05);
+    padding: 0 4rem 0;
+  }
+  .glass-card {
+    background: var(--off-black);
+    position: relative;
+    overflow: hidden;
+    cursor: none;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .glass-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(201,151,58,0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    z-index: 1;
+  }
+  .glass-card:hover::before { opacity: 1; }
+  .glass-card:hover { background: var(--dark); z-index: 2; box-shadow: 0 20px 60px rgba(0,0,0,0.8); }
+  .glass-card:hover .card-frame-svg { transform: scale(1.06) translateY(-4px); filter: drop-shadow(0 12px 24px rgba(201,151,58,0.25)); }
+  .card-inner { padding: 3rem 2.5rem 2.5rem; }
+  .card-category {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    opacity: 0.8;
+  }
+  .card-frame-wrap {
+    height: 160px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .card-frame-svg {
+    max-width: 100%; max-height: 100%;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+  }
+  .card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.4rem;
+  }
+  .card-desc {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.02em;
+  }
+  .card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+  }
+  .card-price span { font-size: 0.7rem; color: var(--text-muted); font-family: 'Inter', sans-serif; }
+  .card-add {
+    width: 40px; height: 40px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: transparent;
+    color: var(--white);
+    font-size: 1.2rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: none;
+    transition: all 0.3s;
+  }
+  .card-add:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,151,58,0.08); }
+  .card-tags {
+    display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1rem;
+  }
+  .card-tag {
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--text-muted);
+  }
+  .badge-new {
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 0.3rem 0.7rem; background: var(--gold); color: var(--black);
+    z-index: 2;
+  }
+  .badge-sale {
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 0.3rem 0.7rem; background: #C94040; color: white;
+    z-index: 2;
+  }
+  .card-colors {
+    display: flex; gap: 0.4rem; margin-bottom: 1.2rem;
+  }
+  .color-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.15);
+    cursor: none;
+    transition: transform 0.2s;
+  }
+  .color-dot:hover { transform: scale(1.4); border-color: white; }
+  .hidden { display: none !important; }
 
-.movie-info{padding:14px 14px 16px}
-.movie-title{
-  font-family:'Syne',sans-serif;font-weight:700;
-  font-size:.95rem;line-height:1.3;
-  margin-bottom:6px;color:var(--white);
-}
-.movie-meta{
-  display:flex;align-items:center;gap:8px;
-  font-family:'JetBrains Mono',monospace;font-size:.58rem;
-  color:var(--muted);
-}
-.meta-sep{opacity:.3}
-.movie-showtimes{
-  margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;
-}
-.showtime{
-  padding:4px 10px;background:rgba(0,255,136,.05);
-  border:1px solid rgba(0,255,136,.15);color:var(--neon);
-  font-family:'JetBrains Mono',monospace;font-size:.55rem;
-  cursor:none;transition:all .2s;border-radius:2px;
-}
-.showtime:hover{background:var(--neon);color:#000}
+  /* LENS TYPES SECTION */
+  .lens-section {
+    padding: 8rem 4rem;
+    background: var(--off-black);
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .lens-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin-top: 4rem;
+  }
+  .lens-card {
+    padding: 2.5rem 2rem;
+    background: var(--black);
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s;
+    cursor: none;
+  }
+  .lens-card:hover {
+    background: var(--dark);
+    border-bottom-color: var(--gold);
+    transform: translateY(-4px);
+  }
+  .lens-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .lens-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+  .lens-desc { font-size: 0.73rem; color: var(--text-muted); line-height: 1.6; }
 
-/* ====== FEATURED BIG CARD ====== */
-.featured-banner{
-  position:relative;border-radius:8px;overflow:hidden;
-  height:420px;margin:40px 0;cursor:none;
-  border:1px solid var(--border);
-}
-.fb-bg{
-  position:absolute;inset:0;
-  background:linear-gradient(to right, rgba(7,7,10,1) 40%,rgba(7,7,10,.3) 100%),
-  linear-gradient(to top, rgba(7,7,10,1) 0%,transparent 60%);
-  z-index:1;
-}
-.fb-img{
-  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  filter:brightness(.5) saturate(1.3);
-}
-.fb-content{
-  position:relative;z-index:2;height:100%;
-  display:flex;flex-direction:column;justify-content:flex-end;
-  padding:48px;
-}
-.fb-tag{
-  font-family:'JetBrains Mono',monospace;font-size:.6rem;
-  letter-spacing:.3em;text-transform:uppercase;margin-bottom:16px;
-  display:flex;align-items:center;gap:8px;
-}
-.fb-tag::before{content:'';width:20px;height:1px}
-.fb-title{
-  font-family:'DM Serif Display',serif;
-  font-size:clamp(2.5rem,5vw,4rem);line-height:.95;
-  margin-bottom:16px;max-width:600px;
-}
-.fb-title em{font-style:italic;color:var(--neon2)}
-.fb-desc{
-  font-size:.95rem;color:var(--muted);line-height:1.7;
-  max-width:500px;margin-bottom:28px;
-}
-.fb-actions{display:flex;gap:12px;align-items:center}
+  /* MATERIALS */
+  .materials-section {
+    padding: 8rem 4rem;
+  }
+  .materials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    margin-top: 4rem;
+  }
+  .material-item { text-align: center; }
+  .material-visual {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+  }
+  .material-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  .material-desc { font-size: 0.72rem; color: var(--text-muted); line-height: 1.6; }
 
-/* ====== PAGE SECTIONS ====== */
-.page-section{display:none}
-.page-section.active{display:block}
+  /* MARQUEE */
+  .marquee-section {
+    padding: 3rem 0;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    overflow: hidden;
+    background: var(--off-black);
+  }
+  .marquee-track {
+    display: flex;
+    animation: marquee 25s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-item {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-muted);
+    padding: 0 3rem;
+    display: flex; align-items: center; gap: 2rem;
+  }
+  .marquee-dot { width: 4px; height: 4px; background: var(--gold); border-radius: 50%; display: inline-block; }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
 
-/* ====== FOOTER ====== */
-footer{
-  background:var(--surface);
-  border-top:1px solid var(--border);
-  padding:60px 40px 40px;
-}
-.footer-grid{
-  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
-  gap:60px;margin-bottom:60px;
-}
-.footer-logo-text{
-  font-family:'Syne',sans-serif;font-weight:800;
-  font-size:2rem;letter-spacing:.1em;
-  background:linear-gradient(135deg,var(--neon),var(--neon2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  margin-bottom:16px;display:block;
-}
-.footer-about{font-size:.9rem;color:var(--muted);line-height:1.7;max-width:280px}
-.footer-col h4{
-  font-family:'JetBrains Mono',monospace;font-size:.6rem;
-  letter-spacing:.3em;text-transform:uppercase;color:var(--neon);
-  margin-bottom:20px;
-}
-.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:12px}
-.footer-col a{font-size:.9rem;color:var(--muted);text-decoration:none;transition:color .2s}
-.footer-col a:hover{color:var(--white)}
-.footer-bottom{
-  display:flex;justify-content:space-between;align-items:center;
-  padding-top:40px;border-top:1px solid var(--border);
-  font-family:'JetBrains Mono',monospace;font-size:.55rem;
-  letter-spacing:.15em;color:var(--muted);text-transform:uppercase;
-}
-.footer-socials{display:flex;gap:20px}
-.fs-link{
-  width:36px;height:36px;border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  font-size:.9rem;text-decoration:none;transition:all .2s;
-  border-radius:4px;
-}
-.fs-link:hover{border-color:var(--neon);background:rgba(0,255,136,.05)}
+  /* TESTIMONIAL */
+  .quote-section {
+    padding: 8rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .quote-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(201,151,58,0.05) 0%, transparent 70%);
+  }
+  .quote-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 8rem;
+    line-height: 0.6;
+    color: var(--gold);
+    opacity: 0.2;
+    display: block;
+    margin-bottom: 1rem;
+  }
+  .quote-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 300;
+    font-style: italic;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    line-height: 1.4;
+    position: relative;
+    z-index: 1;
+  }
+  .quote-author {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
 
-/* RESPONSIVE */
-@media(max-width:900px){
-  .hero{grid-template-columns:1fr;min-height:auto}
-  .hero-right{display:none}
-  .hero-left{padding:100px 24px 60px}
-  nav{padding:0 20px}
-  .nav-links{display:none}
-  .content-area{padding:0 20px 60px}
-  .category-bar{padding:0 20px}
-  .footer-grid{grid-template-columns:1fr 1fr;gap:40px}
-  footer{padding:40px 20px 30px}
-  .movies-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
-}
+  /* FOOTER */
+  footer {
+    background: var(--off-black);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 5rem 4rem 3rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    margin-bottom: 1rem;
+  }
+  .footer-tagline { font-size: 0.75rem; color: var(--text-muted); line-height: 1.7; max-width: 280px; }
+  .footer-col-title {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+  .footer-links a {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s;
+    letter-spacing: 0.05em;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 1.5rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--off-black);
+  }
+  .footer-bottom p { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.08em; }
 
-/* Loading shimmer */
-.shimmer{
-  background:linear-gradient(90deg,var(--card) 25%,rgba(255,255,255,0.04) 50%,var(--card) 75%);
-  background-size:200% 100%;animation:shimmer 1.5s infinite;
-}
-@keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 3rem; right: 3rem;
+    background: var(--gold); color: var(--black);
+    padding: 1rem 1.8rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    z-index: 1000;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    pointer-events: none;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
 
-/* Scroll reveal */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
-.reveal.in{opacity:1;transform:none}
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 500;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.4s;
+    backdrop-filter: blur(8px);
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--off-black);
+    border: 1px solid rgba(255,255,255,0.08);
+    width: 90vw; max-width: 900px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    transform: scale(0.94); transition: transform 0.4s;
+    position: relative;
+  }
+  .modal-overlay.open .modal { transform: scale(1); }
+  .modal-visual {
+    background: var(--dark);
+    display: flex; align-items: center; justify-content: center;
+    padding: 4rem;
+    position: relative;
+  }
+  .modal-svg { max-width: 100%; filter: drop-shadow(0 12px 40px rgba(201,151,58,0.3)); }
+  .modal-info { padding: 3rem; display: flex; flex-direction: column; justify-content: center; }
+  .modal-category {
+    font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem;
+  }
+  .modal-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem; font-weight: 400; margin-bottom: 0.5rem;
+  }
+  .modal-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 2rem; }
+  .modal-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+  .spec-item { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.8rem; }
+  .spec-label { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem; }
+  .spec-val { font-size: 0.82rem; font-weight: 500; }
+  .modal-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; color: var(--gold); margin-bottom: 1.5rem;
+  }
+  .modal-btn {
+    font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--black); background: var(--gold); border: none;
+    padding: 1rem 2rem; cursor: none; font-family: 'Inter', sans-serif;
+    transition: background 0.3s; width: 100%;
+  }
+  .modal-btn:hover { background: var(--gold-light); }
+  .modal-close {
+    position: absolute; top: 1rem; right: 1.5rem;
+    background: none; border: none; color: var(--text-muted);
+    font-size: 1.5rem; cursor: none;
+    transition: color 0.3s;
+  }
+  .modal-close:hover { color: var(--white); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    .filter-section, .glasses-grid, .lens-section, .materials-section, .quote-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .glasses-grid { grid-template-columns: 1fr; padding: 0 1.5rem; }
+    .lens-grid { grid-template-columns: 1fr 1fr; }
+    .materials-grid { grid-template-columns: 1fr; gap: 2rem; }
+    footer { grid-template-columns: 1fr 1fr; padding: 3rem 1.5rem; }
+    .modal { grid-template-columns: 1fr; }
+    .modal-visual { display: none; }
+    .footer-bottom { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
 </style>
 </head>
 <body>
 
-<div id="cur"></div>
-<div id="cur2"></div>
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Toast -->
+<div class="toast" id="toast">Added to collection ✓</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div class="modal-visual" id="modalVisual"></div>
+    <div class="modal-info" id="modalInfo"></div>
+  </div>
+</div>
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">
-    <span class="nav-logo-dot"></span>VΛULT
-  </a>
+  <a href="#" class="nav-logo">OPT<span>I</span>CA</a>
   <ul class="nav-links">
-    <li><a href="#movies-section">Movies</a></li>
-    <li><a href="#cartoons-section">Cartoons</a></li>
-    <li><a href="#anime-section">Anime</a></li>
-    <li><a href="#animation-section">Animation</a></li>
+    <li><a href="#collection">Collection</a></li>
+    <li><a href="#lenses">Lenses</a></li>
+    <li><a href="#materials">Materials</a></li>
+    <li><a href="#about">Story</a></li>
   </ul>
-  <div class="nav-right">
-    <button class="nav-btn">Book Now</button>
-  </div>
+  <button class="nav-cta">Book a Fitting</button>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-left">
-    <div class="hero-tag">Est. 2025 — Premium Cinema</div>
-    <h1 class="hero-title">
-      Experience<br>
-      <span class="line2">Cinema</span><br>
-      <span class="line3">Differently.</span>
-    </h1>
-    <p class="hero-desc">Movies, cartoons, anime and animation — every genre, every world, all in one place. Escape reality tonight.</p>
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-glasses-float" id="heroFloat"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">New Season 2025</div>
+    <h1 class="hero-title">See the<br><em>World</em><br>Clearly</h1>
+    <p class="hero-subtitle">Where precision meets expression — fine eyewear crafted for every face.</p>
     <div class="hero-actions">
-      <a href="#movies-section" class="btn-glitch" data-text="Browse Films">Browse Films</a>
-      <a href="#" class="btn-solid">Book Tickets</a>
-    </div>
-    <div class="hero-stats">
-      <div class="stat"><div class="stat-n">4K<span>+</span></div><div class="stat-l">Titles</div></div>
-      <div class="stat"><div class="stat-n">12<span>+</span></div><div class="stat-l">Genres</div></div>
-      <div class="stat"><div class="stat-n">8<span>×</span></div><div class="stat-l">Screens</div></div>
+      <a href="#collection" class="btn-primary">Explore Collection</a>
+      <a href="#lenses" class="btn-secondary">Lens Guide</a>
     </div>
   </div>
-  <div class="hero-right">
-    <div class="hero-featured-bg"></div>
-    <div class="hero-glow"></div>
-    <div class="hero-poster-stack">
-      <div class="poster-side ps1">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGwPgY4_pbAqcGcmJhSpYadbZ2TVVNI9P8pg&s" alt="Dune" loading="lazy">
-      </div>
-      <div class="hero-main-poster">
-        <img src="https://image.tmdb.org/t/p/w400/d5NXSklXo0qyIYkgV94XAgMIckC.jpg" alt="Inception" loading="lazy">
-      </div>
-      <div class="poster-side ps2">
-        <img src="https://i.ebayimg.com/00/s/MTU5OVgxMTk2/z/HtsAAOSwNKhoS-lE/$_57.PNG?set_id=880000500F" alt="Avengers" loading="lazy">
-      </div>
-    </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
   </div>
 </section>
 
-<!-- CATEGORY TABS -->
-<div class="category-bar" id="catBar">
-  <button class="cat-tab active" data-cat="movies">🎬 <span>Movies</span></button>
-  <div class="cat-divider"></div>
-  <button class="cat-tab" data-cat="cartoons">🎨 <span>Cartoons</span></button>
-  <div class="cat-divider"></div>
-  <button class="cat-tab" data-cat="anime">⛩️ <span>Anime</span></button>
-  <div class="cat-divider"></div>
-  <button class="cat-tab" data-cat="animation">✨ <span>Animation</span></button>
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track" id="marqueeTrack"></div>
 </div>
 
-<!-- ===== MAIN CONTENT ===== -->
-<div class="content-area">
-
-  <!-- ========== MOVIES ========== -->
-  <div class="page-section active" id="movies-section" data-cat="movies">
-
-    <!-- Genre pills -->
-    <div class="genre-bar" id="movies-genres">
-      <button class="genre-pill active" data-genre="all">All Genres</button>
-      <button class="genre-pill g-action" data-genre="action">💥 Action</button>
-      <button class="genre-pill g-horror" data-genre="horror">😱 Horror</button>
-      <button class="genre-pill g-comedy" data-genre="comedy">😂 Comedy</button>
-      <button class="genre-pill g-romance" data-genre="romance">💕 Romance</button>
-      <button class="genre-pill g-adventure" data-genre="adventure">🗺️ Adventure</button>
-      <button class="genre-pill g-scifi" data-genre="scifi">🚀 Sci-Fi</button>
-      <button class="genre-pill g-fantasy" data-genre="fantasy">🔮 Fantasy</button>
-      <button class="genre-pill g-drama" data-genre="drama">🎭 Drama</button>
-      <button class="genre-pill g-thriller" data-genre="thriller">🔪 Thriller</button>
-    </div>
-
-    <!-- Featured Banner -->
-    <div class="featured-banner reveal">
-      <img class="fb-img" src="https://i.pinimg.com/736x/e6/f2/75/e6f275217f498cf65794cff8c066da32.jpg" alt="Dune" loading="lazy">
-      <div class="fb-bg"></div>
-      <div class="fb-content">
-        <div class="fb-tag" style="color:var(--amber)">★ Featured This Week</div>
-        <h2 class="fb-title">Dune: <em>Part Two</em></h2>
-        <p class="fb-desc">Paul Atreides unites with the Fremen and begins a journey of revenge against those who destroyed his family. But he must choose between the love of his life and the fate of the universe.</p>
-        <div class="fb-actions">
-          <a href="#" class="btn-solid" style="clip-path:none;padding:12px 28px">▶ Watch Trailer</a>
-          <a href="#" class="btn-glitch" data-text="Book Seats" style="padding:12px 28px">Book Seats</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- ACTION -->
-    <div class="section-head reveal" data-section="action">
-      <div class="sh-left">
-        <div class="sh-label" style="color:#e74c3c">💥 Action</div>
-        <h3 class="sh-title">Action & Thrills</h3>
-      </div>
-      <div style="display:flex;align-items:center;gap:16px">
-        <span class="sh-count">8 Films</span>
-        <a href="#" class="see-all">See All →</a>
-      </div>
-    </div>
-    <div class="movies-grid reveal" data-filter-section="action">
-      <!-- Mad Max -->
-      <div class="movie-card" data-genre="action">
-        <div class="movie-poster">
-          <img src="https://image.tmdb.org/t/p/w300/8tZYtuWezp8JbcsvHYO0O46tFbo.jpg" alt="Mad Max" loading="lazy">
-          <span class="genre-badge gb-action">Action</span>
-          <span class="rating-badge">★ 8.1</span>
-          <div class="movie-overlay">
-            <div class="movie-play">▶</div>
-            <div class="movie-actions">
-              <button class="ma-btn">Trailer</button>
-              <button class="ma-btn book">Book</button>
-            </div>
-          </div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Mad Max: Fury Road</div>
-          <div class="movie-meta"><span>2015</span><span class="meta-sep">·</span><span>2h</span></div>
-          <div class="movie-showtimes">
-            <button class="showtime">14:00</button>
-            <button class="showtime">19:30</button>
-            <button class="showtime">22:15</button>
-          </div>
-        </div>
-      </div>
-      <!-- Top Gun -->
-      <div class="movie-card" data-genre="action">
-        <div class="movie-poster">
-          <img src="https://image.tmdb.org/t/p/w300/62HCnUTziyWcpDaBO2i1DX17ljH.jpg" alt="Top Gun" loading="lazy">
-          <span class="genre-badge gb-action">Action</span>
-          <span class="rating-badge">★ 8.3</span>
-          <div class="movie-overlay">
-            <div class="movie-play">▶</div>
-            <div class="movie-actions">
-              <button class="ma-btn">Trailer</button>
-              <button class="ma-btn book">Book</button>
-            </div>
-          </div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Top Gun: Maverick</div>
-          <div class="movie-meta"><span>2022</span><span class="meta-sep">·</span><span>2h 11m</span></div>
-          <div class="movie-showtimes">
-            <button class="showtime">13:30</button>
-            <button class="showtime">17:00</button>
-            <button class="showtime">21:00</button>
-          </div>
-        </div>
-      </div>
-      <!-- Avengers -->
-      <div class="movie-card" data-genre="action">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/736x/67/91/b3/6791b331f134fa878b6c66e9b9d833c2.jpg" alt="Avengers" loading="lazy">
-          <span class="genre-badge gb-action">Action</span>
-          <span class="rating-badge">★ 8.4</span>
-          <div class="movie-overlay">
-            <div class="movie-play">▶</div>
-            <div class="movie-actions">
-              <button class="ma-btn">Trailer</button>
-              <button class="ma-btn book">Book</button>
-            </div>
-          </div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Avengers: Endgame</div>
-          <div class="movie-meta"><span>2019</span><span class="meta-sep">·</span><span>3h 1m</span></div>
-          <div class="movie-showtimes">
-            <button class="showtime">12:00</button>
-            <button class="showtime">16:00</button>
-            <button class="showtime">20:30</button>
-          </div>
-        </div>
-      </div>
-      <!-- John Wick -->
-      <div class="movie-card" data-genre="action">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/1200x/44/af/70/44af701bed952e2fb2b406a9c420c592.jpg" alt="John Wick" loading="lazy">
-          <span class="genre-badge gb-action">Action</span>
-          <span class="rating-badge">★ 7.4</span>
-          <div class="movie-overlay">
-            <div class="movie-play">▶</div>
-            <div class="movie-actions">
-              <button class="ma-btn">Trailer</button>
-              <button class="ma-btn book">Book</button>
-            </div>
-          </div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">John Wick: Ch. 4</div>
-          <div class="movie-meta"><span>2023</span><span class="meta-sep">·</span><span>2h 49m</span></div>
-          <div class="movie-showtimes">
-            <button class="showtime">15:00</button>
-            <button class="showtime">19:00</button>
-            <button class="showtime">23:00</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- HORROR -->
-    <div class="section-head reveal">
-      <div class="sh-left">
-        <div class="sh-label" style="color:var(--neon2)">😱 Horror</div>
-        <h3 class="sh-title">Horror & Suspense</h3>
-      </div>
-      <div style="display:flex;align-items:center;gap:16px">
-        <span class="sh-count">6 Films</span>
-        <a href="#" class="see-all">See All →</a>
-      </div>
-    </div>
-    <div class="movies-grid reveal">
-      <!-- Hereditary -->
-      <div class="movie-card" data-genre="horror">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/1200x/f1/42/78/f14278b8d37d22e5b6f07bc2f1ac20f6.jpg" alt="Hereditary" loading="lazy">
-          <span class="genre-badge gb-horror">Horror</span>
-          <span class="rating-badge">★ 7.3</span>
-          <div class="movie-overlay">
-            <div class="movie-play">▶</div>
-            <div class="movie-actions">
-              <button class="ma-btn">Trailer</button>
-              <button class="ma-btn book">Book</button>
-            </div>
-          </div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Hereditary</div>
-          <div class="movie-meta"><span>2018</span><span class="meta-sep">·</span><span>2h 7m</span></div>
-          <div class="movie-showtimes">
-            <button class="showtime">20:00</button>
-            <button class="showtime">23:00</button>
-          </div>
-        </div>
-      </div>
-      <!-- Get Out -->
-      <div class="movie-card" data-genre="horror">
-        <div class="movie-poster">
-          <img src="https://image.tmdb.org/t/p/w300/tFXcEccSQMf3lfhfXKSU9iRBpa3.jpg" alt="Get Out" loading="lazy">
-          <span class="genre-badge gb-horror">Horror</span>
-          <span class="rating-badge">★ 7.7</span>
-          <div class="movie-overlay">
-            <div class="movie-play">▶</div>
-            <div class="movie-actions">
-              <button class="ma-btn">Trailer</button>
-              <button class="ma-btn book">Book</button>
-            </div>
-          </div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Get Out</div>
-          <div class="movie-meta"><span>2017</span><span class="meta-sep">·</span><span>1h 44m</span></div>
-          <div class="movie-showtimes">
-            <button class="showtime">18:30</button>
-            <button class="showtime">21:30</button>
-          </div>
-        </div>
-      </div>
-      <!-- Sinister -->
-      <div class="movie-card" data-genre="horror">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/736x/91/3b/a9/913ba95c74c17632c2cad56de448540a.jpg" alt="Sinister" loading="lazy">
-          <span class="genre-badge gb-horror">Horror</span>
-          <span class="rating-badge">★ 6.8</span>
-          <div class="movie-overlay">
-            <div class="movie-play">▶</div>
-            <div class="movie-actions">
-              <button class="ma-btn">Trailer</button>
-              <button class="ma-btn book">Book</button>
-            </div>
-          </div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Sinister</div>
-          <div class="movie-meta"><span>2012</span><span class="meta-sep">·</span><span>1h 50m</span></div>
-          <div class="movie-showtimes">
-            <button class="showtime">21:00</button>
-            <button class="showtime">23:30</button>
-          </div>
-        </div>
-      </div>
-      <!-- Midsommar -->
-      <div class="movie-card" data-genre="horror">
-        <div class="movie-poster">
-          <img src="https://image.tmdb.org/t/p/w300/7LEI8ulZzO5gy9Ww2NVCrKmHeDZ.jpg" alt="Midsommar" loading="lazy">
-          <span class="genre-badge gb-horror">Horror</span>
-          <span class="rating-badge">★ 7.1</span>
-          <div class="movie-overlay">
-            <div class="movie-play">▶</div>
-            <div class="movie-actions">
-              <button class="ma-btn">Trailer</button>
-              <button class="ma-btn book">Book</button>
-            </div>
-          </div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Midsommar</div>
-          <div class="movie-meta"><span>2019</span><span class="meta-sep">·</span><span>2h 28m</span></div>
-          <div class="movie-showtimes">
-            <button class="showtime">19:30</button>
-            <button class="showtime">22:30</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- COMEDY -->
-    <div class="section-head reveal">
-      <div class="sh-left">
-        <div class="sh-label" style="color:#ffdd57">😂 Comedy</div>
-        <h3 class="sh-title">Comedy & Fun</h3>
-      </div>
-      <div style="display:flex;align-items:center;gap:16px">
-        <span class="sh-count">5 Films</span>
-        <a href="#" class="see-all">See All →</a>
-      </div>
-    </div>
-    <div class="movies-grid reveal">
-      <!-- Superbad -->
-      <div class="movie-card" data-genre="comedy">
-        <div class="movie-poster">
-          <img src="https://image.tmdb.org/t/p/w300/ek8e8txUyUwd2BNqj6lFEerJfbq.jpg" alt="Superbad" loading="lazy">
-          <span class="genre-badge gb-comedy">Comedy</span>
-          <span class="rating-badge">★ 7.6</span>
-          <div class="movie-overlay">
-            <div class="movie-play">▶</div>
-            <div class="movie-actions">
-              <button class="ma-btn">Trailer</button>
-              <button class="ma-btn book">Book</button>
-            </div>
-          </div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Superbad</div>
-          <div class="movie-meta"><span>2007</span><span class="meta-sep">·</span><span>1h 53m</span></div>
-          <div class="movie-showtimes">
-            <button class="showtime">15:30</button>
-            <button class="showtime">19:00</button>
-          </div>
-        </div>
-      </div>
-      <!-- The Grand Budapest -->
-      <div class="movie-card" data-genre="comedy">
-        <div class="movie-poster">
-          <img src="https://image.tmdb.org/t/p/w300/eWdyYQreja6JGCzqHWXpWHDrrPo.jpg" alt="Grand Budapest" loading="lazy">
-          <span class="genre-badge gb-comedy">Comedy</span>
-          <span class="rating-badge">★ 8.1</span>
-          <div class="movie-overlay">
-            <div class="movie-play">▶</div>
-            <div class="movie-actions">
-              <button class="ma-btn">Trailer</button>
-              <button class="ma-btn book">Book</button>
-            </div>
-          </div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Grand Budapest Hotel</div>
-          <div class="movie-meta"><span>2014</span><span class="meta-sep">·</span><span>1h 39m</span></div>
-          <div class="movie-showtimes">
-            <button class="showtime">14:00</button>
-            <button class="showtime">17:30</button>
-          </div>
-        </div>
-      </div>
-      <!-- Everything Everywhere -->
-      <div class="movie-card" data-genre="comedy">
-        <div class="movie-poster">
-          <img src="https://image.tmdb.org/t/p/w300/w3LxiVYdWWRvEVdn5RYq6jIqkb1.jpg" alt="Everything Everywhere" loading="lazy">
-          <span class="genre-badge gb-comedy">Comedy</span>
-          <span class="rating-badge">★ 7.8</span>
-          <div class="movie-overlay">
-            <div class="movie-play">▶</div>
-            <div class="movie-actions">
-              <button class="ma-btn">Trailer</button>
-              <button class="ma-btn book">Book</button>
-            </div>
-          </div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Everything Everywhere</div>
-          <div class="movie-meta"><span>2022</span><span class="meta-sep">·</span><span>2h 19m</span></div>
-          <div class="movie-showtimes">
-            <button class="showtime">13:00</button>
-            <button class="showtime">16:30</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ROMANCE -->
-    <div class="section-head reveal">
-      <div class="sh-left">
-        <div class="sh-label" style="color:#ff6b9d">💕 Romance</div>
-        <h3 class="sh-title">Romance & Drama</h3>
-      </div>
-      <div style="display:flex;align-items:center;gap:16px">
-        <span class="sh-count">5 Films</span>
-        <a href="#" class="see-all">See All →</a>
-      </div>
-    </div>
-    <div class="movies-grid reveal">
-      <div class="movie-card" data-genre="romance">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/736x/60/a9/e4/60a9e4adb00c7cf666ec5b32969e9ead.jpg" alt="La La Land" loading="lazy">
-          <span class="genre-badge gb-romance">Romance</span>
-          <span class="rating-badge">★ 8.0</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">La La Land</div>
-          <div class="movie-meta"><span>2016</span><span class="meta-sep">·</span><span>2h 8m</span></div>
-          <div class="movie-showtimes"><button class="showtime">16:00</button><button class="showtime">19:30</button></div>
-        </div>
-      </div>
-      <div class="movie-card" data-genre="romance">
-        <div class="movie-poster">
-          <img src="https://m.media-amazon.com/images/S/pv-target-images/7b41c5d28a0f3e52e25870eda4f6b3220831b2add81795b94e35dee851faa31e.jpg" alt="Titanic" loading="lazy">
-          <span class="genre-badge gb-romance">Romance</span>
-          <span class="rating-badge">★ 7.9</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Titanic</div>
-          <div class="movie-meta"><span>1997</span><span class="meta-sep">·</span><span>3h 14m</span></div>
-          <div class="movie-showtimes"><button class="showtime">12:30</button><button class="showtime">17:00</button></div>
-        </div>
-      </div>
-      <div class="movie-card" data-genre="romance">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/1200x/e4/c1/c8/e4c1c8cb085f72a691dfe8b5afcb052c.jpg" alt="Before Sunrise" loading="lazy">
-          <span class="genre-badge gb-romance">Romance</span>
-          <span class="rating-badge">★ 8.1</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Before Sunrise</div>
-          <div class="movie-meta"><span>1995</span><span class="meta-sep">·</span><span>1h 41m</span></div>
-          <div class="movie-showtimes"><button class="showtime">15:00</button><button class="showtime">18:00</button></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SCI-FI -->
-    <div class="section-head reveal">
-      <div class="sh-left">
-        <div class="sh-label" style="color:var(--electric)">🚀 Sci-Fi</div>
-        <h3 class="sh-title">Science Fiction</h3>
-      </div>
-      <div style="display:flex;align-items:center;gap:16px">
-        <span class="sh-count">6 Films</span>
-        <a href="#" class="see-all">See All →</a>
-      </div>
-    </div>
-    <div class="movies-grid reveal">
-      <div class="movie-card" data-genre="scifi">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/1200x/b0/ae/a4/b0aea49646879a043ad9f6ec3002e99f.jpg" alt="Inception" loading="lazy">
-          <span class="genre-badge gb-scifi">Sci-Fi</span>
-          <span class="rating-badge">★ 8.8</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Inception</div>
-          <div class="movie-meta"><span>2010</span><span class="meta-sep">·</span><span>2h 28m</span></div>
-          <div class="movie-showtimes"><button class="showtime">14:30</button><button class="showtime">18:00</button><button class="showtime">21:30</button></div>
-        </div>
-      </div>
-      <div class="movie-card" data-genre="scifi">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/736x/6c/57/fd/6c57fd7f62e881cc20faea7bd3e2a3f6.jpg" alt="Dune" loading="lazy">
-          <span class="genre-badge gb-scifi">Sci-Fi</span>
-          <span class="rating-badge">★ 8.0</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Dune: Part One</div>
-          <div class="movie-meta"><span>2021</span><span class="meta-sep">·</span><span>2h 35m</span></div>
-          <div class="movie-showtimes"><button class="showtime">13:00</button><button class="showtime">17:30</button><button class="showtime">22:00</button></div>
-        </div>
-      </div>
-      <div class="movie-card" data-genre="scifi">
-        <div class="movie-poster">
-          <img src="https://image.tmdb.org/t/p/w300/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg" alt="Interstellar" loading="lazy">
-          <span class="genre-badge gb-scifi">Sci-Fi</span>
-          <span class="rating-badge">★ 8.6</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Interstellar</div>
-          <div class="movie-meta"><span>2014</span><span class="meta-sep">·</span><span>2h 49m</span></div>
-          <div class="movie-showtimes"><button class="showtime">14:00</button><button class="showtime">18:30</button></div>
-        </div>
-      </div>
-      <div class="movie-card" data-genre="scifi">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/1200x/03/73/da/0373da6818cdc9c94ea006c5a8229523.jpg" alt="The Matrix" loading="lazy">
-          <span class="genre-badge gb-scifi">Sci-Fi</span>
-          <span class="rating-badge">★ 8.7</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">The Matrix</div>
-          <div class="movie-meta"><span>1999</span><span class="meta-sep">·</span><span>2h 16m</span></div>
-          <div class="movie-showtimes"><button class="showtime">15:30</button><button class="showtime">20:00</button></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ADVENTURE/FANTASY -->
-    <div class="section-head reveal">
-      <div class="sh-left">
-        <div class="sh-label" style="color:var(--neon3)">🔮 Fantasy & Adventure</div>
-        <h3 class="sh-title">Fantasy Worlds</h3>
-      </div>
-      <div style="display:flex;align-items:center;gap:16px">
-        <span class="sh-count">5 Films</span>
-        <a href="#" class="see-all">See All →</a>
-      </div>
-    </div>
-    <div class="movies-grid reveal">
-      <div class="movie-card" data-genre="fantasy">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/1200x/54/df/c2/54dfc2793ff75f8ab487e910a822a948.jpg" alt="Lord of the Rings" loading="lazy">
-          <span class="genre-badge gb-fantasy">Fantasy</span>
-          <span class="rating-badge">★ 8.9</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Lord of the Rings</div>
-          <div class="movie-meta"><span>2001</span><span class="meta-sep">·</span><span>3h 28m</span></div>
-          <div class="movie-showtimes"><button class="showtime">12:00</button><button class="showtime">17:00</button></div>
-        </div>
-      </div>
-      <div class="movie-card" data-genre="adventure">
-        <div class="movie-poster">
-          <img src="https://image.tmdb.org/t/p/w300/jRXYjXNq0Cs2TcJjLkki24MLp7u.jpg" alt="Avatar" loading="lazy">
-          <span class="genre-badge gb-adventure">Adventure</span>
-          <span class="rating-badge">★ 8.5</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Avatar</div>
-          <div class="movie-meta"><span>1981</span><span class="meta-sep">·</span><span>1h 55m</span></div>
-          <div class="movie-showtimes"><button class="showtime">14:00</button><button class="showtime">18:00</button></div>
-        </div>
-      </div>
-    </div>
+<!-- COLLECTION -->
+<section class="filter-section" id="collection">
+  <div class="section-label">The Collection</div>
+  <h2 class="section-title">Find Your Frame</h2>
+  <p class="section-desc">Sixteen iconic styles across every category — from timeless classics to avant-garde statements.</p>
+  <div class="filter-tabs" id="filterTabs">
+    <button class="filter-tab active" data-filter="all">All Styles</button>
+    <button class="filter-tab" data-filter="classic">Classic</button>
+    <button class="filter-tab" data-filter="sport">Sport</button>
+    <button class="filter-tab" data-filter="luxury">Luxury</button>
+    <button class="filter-tab" data-filter="fashion">Fashion</button>
+    <button class="filter-tab" data-filter="reading">Reading</button>
   </div>
+</section>
 
-  <!-- ========== CARTOONS ========== -->
-  <div class="page-section" id="cartoons-section" data-cat="cartoons">
-    <div class="genre-bar">
-      <button class="genre-pill active" data-genre="all">All Cartoons</button>
-      <button class="genre-pill g-comedy" data-genre="comedy">😂 Comedy</button>
-      <button class="genre-pill g-adventure" data-genre="adventure">🗺️ Adventure</button>
-      <button class="genre-pill g-fantasy" data-genre="fantasy">🔮 Fantasy</button>
-      <button class="genre-pill g-animation" data-genre="family">👨‍👩‍👧 Family</button>
-    </div>
-    <div class="featured-banner reveal">
-      <img class="fb-img" src="https://i.pinimg.com/736x/3b/c0/49/3bc04997a108ec8700bce15787fb092b.jpg" alt="Tom and Jerry" loading="lazy" style="object-position:top">
-      <div class="fb-bg"></div>
-      <div class="fb-content">
-        <div class="fb-tag" style="color:#ffdd57">🎨 Fan Favourite</div>
-        <h2 class="fb-title">Classic <em>Cartoons</em></h2>
-        <p class="fb-desc">Relive the golden age of animation. Timeless laughs, iconic characters, pure childhood magic on the big screen.</p>
-        <div class="fb-actions">
-          <a href="#" class="btn-solid" style="clip-path:none;padding:12px 28px;background:#ffdd57;color:#000">▶ Play Now</a>
-        </div>
-      </div>
-    </div>
-    <div class="section-head reveal">
-      <div class="sh-left">
-        <div class="sh-label" style="color:#ffdd57">😂 Comedy Cartoons</div>
-        <h3 class="sh-title">Laugh Out Loud</h3>
-      </div>
-      <div style="display:flex;align-items:center;gap:16px">
-        <span class="sh-count">6 Shows</span>
-        <a href="#" class="see-all">See All →</a>
-      </div>
-    </div>
-    <div class="movies-grid reveal">
-      <div class="movie-card">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/736x/9d/f4/65/9df465257c13dcc6b22e1b89f184be24.jpg" alt="Tom and Jerry" loading="lazy">
-          <span class="genre-badge gb-comedy">Comedy</span>
-          <span class="rating-badge">★ 7.5</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Tom & Jerry</div>
-          <div class="movie-meta"><span>Classic</span><span class="meta-sep">·</span><span>All Ages</span></div>
-          <div class="movie-showtimes"><button class="showtime">10:00</button><button class="showtime">14:00</button></div>
-        </div>
-      </div>
-      <div class="movie-card">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/736x/0f/d3/b0/0fd3b00fe5e87d56bce65a035086191a.jpg" alt="Shrek" loading="lazy">
-          <span class="genre-badge gb-comedy">Comedy</span>
-          <span class="rating-badge">★ 7.9</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Shrek</div>
-          <div class="movie-meta"><span>2001</span><span class="meta-sep">·</span><span>1h 30m</span></div>
-          <div class="movie-showtimes"><button class="showtime">11:00</button><button class="showtime">15:00</button></div>
-        </div>
-      </div>
-      <div class="movie-card">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/736x/47/c1/11/47c1115fdf3a67f3bff8359b50f7ab12.jpg" alt="Minions" loading="lazy">
-          <span class="genre-badge gb-comedy">Comedy</span>
-          <span class="rating-badge">★ 6.4</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Minions</div>
-          <div class="movie-meta"><span>2015</span><span class="meta-sep">·</span><span>1h 31m</span></div>
-          <div class="movie-showtimes"><button class="showtime">10:30</button><button class="showtime">13:30</button></div>
-        </div>
-      </div>
-    </div>
+<div class="glasses-grid" id="glassesGrid"></div>
 
-    <div class="section-head reveal">
-      <div class="sh-left">
-        <div class="sh-label" style="color:var(--amber)">🗺️ Adventure Cartoons</div>
-        <h3 class="sh-title">Epic Adventures</h3>
-      </div>
-      <div style="display:flex;align-items:center;gap:16px">
-        <span class="sh-count">4 Films</span>
-        <a href="#" class="see-all">See All →</a>
-      </div>
-    </div>
-    <div class="movies-grid reveal">
-      <div class="movie-card">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/736x/3b/23/87/3b2387292fb0374d3597a9bd45bde79f.jpg" alt="How to Train Your Dragon" loading="lazy">
-          <span class="genre-badge gb-adventure">Adventure</span>
-          <span class="rating-badge">★ 8.1</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">How to Train Your Dragon</div>
-          <div class="movie-meta"><span>2010</span><span class="meta-sep">·</span><span>1h 38m</span></div>
-          <div class="movie-showtimes"><button class="showtime">12:00</button><button class="showtime">16:00</button></div>
-        </div>
-      </div>
-      <div class="movie-card">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/736x/f7/9f/28/f79f28d0c5e5d73daa13b332b580e817.jpg" alt="Kung Fu Panda" loading="lazy">
-          <span class="genre-badge gb-adventure">Adventure</span>
-          <span class="rating-badge">★ 7.6</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Kung Fu Panda</div>
-          <div class="movie-meta"><span>2008</span><span class="meta-sep">·</span><span>1h 32m</span></div>
-          <div class="movie-showtimes"><button class="showtime">10:00</button><button class="showtime">14:30</button></div>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- LENS TYPES -->
+<section class="lens-section" id="lenses">
+  <div class="section-label">Lens Technology</div>
+  <h2 class="section-title">The Right Lens<br>Changes Everything</h2>
+  <p class="section-desc">From everyday clarity to specialized performance, every lens is crafted for purpose.</p>
+  <div class="lens-grid" id="lensGrid"></div>
+</section>
 
-  <!-- ========== ANIME ========== -->
-  <div class="page-section" id="anime-section" data-cat="anime">
-    <div class="genre-bar">
-      <button class="genre-pill active" data-genre="all">All Anime</button>
-      <button class="genre-pill g-action" data-genre="action">⚔️ Shonen</button>
-      <button class="genre-pill g-romance" data-genre="romance">💕 Romance</button>
-      <button class="genre-pill g-fantasy" data-genre="fantasy">🔮 Fantasy</button>
-      <button class="genre-pill g-scifi" data-genre="scifi">🤖 Mecha</button>
-      <button class="genre-pill g-horror" data-genre="horror">👹 Dark</button>
-    </div>
+<!-- QUOTE -->
+<section class="quote-section">
+  <div class="quote-bg"></div>
+  <span class="quote-mark">"</span>
+  <p class="quote-text">Eyewear is no longer just correction — it is the first thing people see about you, and the last thing you'd ever want to compromise on.</p>
+  <div class="quote-author">— Optica Design Philosophy</div>
+</section>
 
-    <div class="featured-banner reveal" style="border-color:rgba(255,60,172,.2)">
-      <img class="fb-img" src="https://i.pinimg.com/1200x/77/fc/96/77fc96283a4ad15609f8abe83d398425.jpg" alt="Demon Slayer" loading="lazy">
-      <div class="fb-bg"></div>
-      <div class="fb-content">
-        <div class="fb-tag" style="color:var(--neon2)">⛩️ Anime Premiere</div>
-        <h2 class="fb-title">Demon Slayer: <em>Mugen Train</em></h2>
-        <p class="fb-desc">Tanjiro and friends embark on a new mission aboard the Mugen Train. A record-breaking cinematic phenomenon.</p>
-        <div class="fb-actions">
-          <a href="#" class="btn-solid" style="clip-path:none;padding:12px 28px;background:var(--neon2)">▶ Watch Now</a>
-          <a href="#" class="btn-glitch" data-text="Book Seats" style="padding:12px 28px;border-color:var(--neon2);color:var(--neon2)">Book Seats</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="section-head reveal">
-      <div class="sh-left">
-        <div class="sh-label" style="color:var(--neon2)">⚔️ Shonen Action</div>
-        <h3 class="sh-title">Battle Anime</h3>
-      </div>
-      <div style="display:flex;align-items:center;gap:16px">
-        <span class="sh-count">7 Films</span>
-        <a href="#" class="see-all">See All →</a>
-      </div>
-    </div>
-    <div class="movies-grid reveal">
-      <div class="movie-card">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/736x/81/c7/9c/81c79cb8cfcb320fb7890403fc9bc81d.jpg" alt="Demon Slayer" loading="lazy">
-          <span class="genre-badge gb-action">Shonen</span>
-          <span class="rating-badge">★ 8.3</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Demon Slayer Movie</div>
-          <div class="movie-meta"><span>2020</span><span class="meta-sep">·</span><span>1h 57m</span></div>
-          <div class="movie-showtimes"><button class="showtime">14:00</button><button class="showtime">18:00</button><button class="showtime">21:30</button></div>
-        </div>
-      </div>
-      <div class="movie-card">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/1200x/99/ef/83/99ef837028463d4f940b63c2b288222b.jpg" alt="Jujutsu Kaisen" loading="lazy">
-          <span class="genre-badge gb-action">Shonen</span>
-          <span class="rating-badge">★ 8.7</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Jujutsu Kaisen 0</div>
-          <div class="movie-meta"><span>2021</span><span class="meta-sep">·</span><span>1h 45m</span></div>
-          <div class="movie-showtimes"><button class="showtime">15:30</button><button class="showtime">19:30</button></div>
-        </div>
-      </div>
-      <div class="movie-card">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/1200x/46/8b/ac/468baccda1af6b7abc94e6740708c5a5.jpg" alt="Naruto" loading="lazy">
-          <span class="genre-badge gb-action">Shonen</span>
-          <span class="rating-badge">★ 8.4</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Naruto: Road to Ninja</div>
-          <div class="movie-meta"><span>2012</span><span class="meta-sep">·</span><span>1h 49m</span></div>
-          <div class="movie-showtimes"><button class="showtime">13:00</button><button class="showtime">17:00</button></div>
-        </div>
-      </div>
-      <div class="movie-card">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/1200x/f1/63/60/f16360166bb294131a504d61503673ed.jpg" alt="Dragon Ball" loading="lazy">
-          <span class="genre-badge gb-action">Shonen</span>
-          <span class="rating-badge">★ 7.9</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Dragon Ball Super: Broly</div>
-          <div class="movie-meta"><span>2018</span><span class="meta-sep">·</span><span>1h 41m</span></div>
-          <div class="movie-showtimes"><button class="showtime">14:30</button><button class="showtime">18:30</button></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section-head reveal">
-      <div class="sh-left">
-        <div class="sh-label" style="color:var(--neon3)">🔮 Fantasy Anime</div>
-        <h3 class="sh-title">Magical Worlds</h3>
-      </div>
-      <div style="display:flex;align-items:center;gap:16px">
-        <span class="sh-count">5 Films</span>
-        <a href="#" class="see-all">See All →</a>
-      </div>
-    </div>
-    <div class="movies-grid reveal">
-      <div class="movie-card">
-        <div class="movie-poster">
-          <img src="https://image.tmdb.org/t/p/w300/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg" alt="Spirited Away" loading="lazy">
-          <span class="genre-badge gb-fantasy">Fantasy</span>
-          <span class="rating-badge">★ 9.3</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Spirited Away</div>
-          <div class="movie-meta"><span>2001</span><span class="meta-sep">·</span><span>2h 4m</span></div>
-          <div class="movie-showtimes"><button class="showtime">13:00</button><button class="showtime">17:00</button><button class="showtime">20:30</button></div>
-        </div>
-      </div>
-      <div class="movie-card">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/736x/62/1f/a3/621fa391eb10f4196393f684ccb5175d.jpg" alt="Princess Mononoke" loading="lazy">
-          <span class="genre-badge gb-fantasy">Fantasy</span>
-          <span class="rating-badge">★ 8.4</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Princess Mononoke</div>
-          <div class="movie-meta"><span>1997</span><span class="meta-sep">·</span><span>2h 13m</span></div>
-          <div class="movie-showtimes"><button class="showtime">14:00</button><button class="showtime">18:30</button></div>
-        </div>
-      </div>
-      <div class="movie-card">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/1200x/2a/6d/69/2a6d69cdcf5fccfa79b4cb9e4da1c04f.jpg" alt="Your Name" loading="lazy">
-          <span class="genre-badge gb-romance">Romance</span>
-          <span class="rating-badge">★ 8.4</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Your Name</div>
-          <div class="movie-meta"><span>2016</span><span class="meta-sep">·</span><span>1h 52m</span></div>
-          <div class="movie-showtimes"><button class="showtime">16:00</button><button class="showtime">19:00</button></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========== ANIMATION ========== -->
-  <div class="page-section" id="animation-section" data-cat="animation">
-    <div class="genre-bar">
-      <button class="genre-pill active" data-genre="all">All Animation</button>
-      <button class="genre-pill g-adventure" data-genre="adventure">🗺️ Adventure</button>
-      <button class="genre-pill g-comedy" data-genre="comedy">😂 Comedy</button>
-      <button class="genre-pill g-fantasy" data-genre="fantasy">🔮 Fantasy</button>
-      <button class="genre-pill g-drama" data-genre="drama">🎭 Drama</button>
-    </div>
-
-    <div class="featured-banner reveal" style="border-color:rgba(26,188,156,.2)">
-      <img class="fb-img" src="https://i.pinimg.com/1200x/6c/56/ea/6c56ea63d31cc1b529fdc35e2a879999.jpg" alt="Inside Out" loading="lazy">
-      <div class="fb-bg"></div>
-      <div class="fb-content">
-        <div class="fb-tag" style="color:#1abc9c">✨ Animation Spotlight</div>
-        <h2 class="fb-title">Inside <em>Out 2</em></h2>
-        <p class="fb-desc">Riley faces the challenges of adolescence as new emotions — including Anxiety — arrive and threaten to overshadow old ones. A Pixar masterpiece.</p>
-        <div class="fb-actions">
-          <a href="#" class="btn-solid" style="clip-path:none;padding:12px 28px;background:#1abc9c;color:#000">▶ Watch Now</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="section-head reveal">
-      <div class="sh-left">
-        <div class="sh-label" style="color:#1abc9c">✨ Pixar & Disney</div>
-        <h3 class="sh-title">Animation Masterpieces</h3>
-      </div>
-      <div style="display:flex;align-items:center;gap:16px">
-        <span class="sh-count">8 Films</span>
-        <a href="#" class="see-all">See All →</a>
-      </div>
-    </div>
-    <div class="movies-grid reveal">
-      <div class="movie-card">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/1200x/6c/56/ea/6c56ea63d31cc1b529fdc35e2a879999.jpg" alt="Inside Out 2" loading="lazy">
-          <span class="genre-badge gb-animation">Pixar</span>
-          <span class="rating-badge">★ 7.8</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Inside Out 2</div>
-          <div class="movie-meta"><span>2024</span><span class="meta-sep">·</span><span>1h 40m</span></div>
-          <div class="movie-showtimes"><button class="showtime">11:00</button><button class="showtime">15:00</button><button class="showtime">18:30</button></div>
-        </div>
-      </div>
-      <div class="movie-card">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/1200x/35/88/1d/35881d86ffc9d9cdd995a9d0eeb26ef8.jpg" alt="The Lion King" loading="lazy">
-          <span class="genre-badge gb-animation">Disney</span>
-          <span class="rating-badge">★ 8.5</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">The Lion King</div>
-          <div class="movie-meta"><span>1994</span><span class="meta-sep">·</span><span>1h 28m</span></div>
-          <div class="movie-showtimes"><button class="showtime">10:30</button><button class="showtime">14:00</button></div>
-        </div>
-      </div>
-      <div class="movie-card">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/736x/a1/6c/89/a16c89e3dcd2bbc3d19c1c23ceaf266d.jpg" alt="Coco" loading="lazy">
-          <span class="genre-badge gb-animation">Pixar</span>
-          <span class="rating-badge">★ 8.4</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Coco</div>
-          <div class="movie-meta"><span>2017</span><span class="meta-sep">·</span><span>1h 45m</span></div>
-          <div class="movie-showtimes"><button class="showtime">12:00</button><button class="showtime">16:30</button></div>
-        </div>
-      </div>
-      <div class="movie-card">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/736x/fe/5f/37/fe5f373cb46a1cafd7e82dd3b5b3a44c.jpg" alt="Moana" loading="lazy">
-          <span class="genre-badge gb-animation">Disney</span>
-          <span class="rating-badge">★ 7.6</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Moana</div>
-          <div class="movie-meta"><span>2016</span><span class="meta-sep">·</span><span>1h 47m</span></div>
-          <div class="movie-showtimes"><button class="showtime">11:30</button><button class="showtime">15:30</button></div>
-        </div>
-      </div>
-      <div class="movie-card">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/736x/46/7d/94/467d9422c34a27a813e84d4da80a0cb1.jpg" alt="Spider-Man Spider-Verse" loading="lazy">
-          <span class="genre-badge gb-adventure">Adventure</span>
-          <span class="rating-badge">★ 8.6</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Spider-Verse</div>
-          <div class="movie-meta"><span>2018</span><span class="meta-sep">·</span><span>1h 57m</span></div>
-          <div class="movie-showtimes"><button class="showtime">13:00</button><button class="showtime">17:30</button><button class="showtime">21:00</button></div>
-        </div>
-      </div>
-      <div class="movie-card">
-        <div class="movie-poster">
-          <img src="https://i.pinimg.com/736x/cd/f0/2f/cdf02fbb3554e09507bad8789e238b26.jpg" alt="Frozen" loading="lazy">
-          <span class="genre-badge gb-fantasy">Fantasy</span>
-          <span class="rating-badge">★ 7.4</span>
-          <div class="movie-overlay"><div class="movie-play">▶</div><div class="movie-actions"><button class="ma-btn">Trailer</button><button class="ma-btn book">Book</button></div></div>
-        </div>
-        <div class="movie-info">
-          <div class="movie-title">Frozen</div>
-          <div class="movie-meta"><span>2013</span><span class="meta-sep">·</span><span>1h 42m</span></div>
-          <div class="movie-showtimes"><button class="showtime">10:00</button><button class="showtime">14:00</button></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div><!-- end content-area -->
+<!-- MATERIALS -->
+<section class="materials-section" id="materials">
+  <div class="section-label">Craftsmanship</div>
+  <h2 class="section-title">Materials We Trust</h2>
+  <p class="section-desc">Every frame begins with a choice of material — each with its own character, weight, and story.</p>
+  <div class="materials-grid" id="materialsGrid"></div>
+</section>
 
 <!-- FOOTER -->
-<footer>
-  <div class="footer-grid">
-    <div>
-      <span class="footer-logo-text">VΛULT</span>
-      <p class="footer-about">Premium cinema — movies, cartoons, anime and animation all in one place. Every genre. Every world. Every night.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Watch</h4>
-      <ul>
-        <li><a href="#">Movies</a></li>
-        <li><a href="#">Cartoons</a></li>
-        <li><a href="#">Anime</a></li>
-        <li><a href="#">Animation</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Genres</h4>
-      <ul>
-        <li><a href="#">Action</a></li>
-        <li><a href="#">Horror</a></li>
-        <li><a href="#">Comedy</a></li>
-        <li><a href="#">Romance</a></li>
-        <li><a href="#">Sci-Fi</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Visit</h4>
-      <ul>
-        <li><a href="#">Book Tickets</a></li>
-        <li><a href="#">Membership</a></li>
-        <li><a href="#">Gift Cards</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </div>
+<footer id="about">
+  <div>
+    <div class="footer-logo">OPTICA</div>
+    <p class="footer-tagline">Fine eyewear for every face, every moment. Founded on the belief that vision is a form of expression.</p>
   </div>
-  <div class="footer-bottom">
-    <span>© 2025 VΛULT Cinema</span>
-    <div class="footer-socials">
-      <a class="fs-link" href="#">𝕏</a>
-      <a class="fs-link" href="#">ig</a>
-      <a class="fs-link" href="#">yt</a>
-    </div>
+  <div>
+    <div class="footer-col-title">Eyewear</div>
+    <ul class="footer-links">
+      <li><a href="#">Optical Frames</a></li>
+      <li><a href="#">Sunglasses</a></li>
+      <li><a href="#">Sport Eyewear</a></li>
+      <li><a href="#">Kids Frames</a></li>
+      <li><a href="#">Blue Light</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="footer-col-title">Services</div>
+    <ul class="footer-links">
+      <li><a href="#">Eye Examination</a></li>
+      <li><a href="#">Frame Fitting</a></li>
+      <li><a href="#">Lens Replacement</a></li>
+      <li><a href="#">Repairs</a></li>
+      <li><a href="#">Gift Cards</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="footer-col-title">Company</div>
+    <ul class="footer-links">
+      <li><a href="#">Our Story</a></li>
+      <li><a href="#">Sustainability</a></li>
+      <li><a href="#">Press</a></li>
+      <li><a href="#">Careers</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
   </div>
 </footer>
+<div class="footer-bottom">
+  <p>© 2025 Optica Fine Eyewear. All rights reserved.</p>
+  <p>Crafted with precision · Built with care</p>
+</div>
 
 <script>
-// ——— Cursor ———
-const cur = document.getElementById('cur');
-const cur2 = document.getElementById('cur2');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX; my=e.clientY;
-  cur.style.cssText=`left:${mx-4}px;top:${my-4}px`;
-});
-(function loop(){
-  rx+=(mx-rx)*.1; ry+=(my-ry)*.1;
-  cur2.style.cssText=`left:${rx-18}px;top:${ry-18}px`;
-  requestAnimationFrame(loop);
-})();
-document.querySelectorAll('a,button,.movie-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.style.transform='scale(2.5)';cur2.style.opacity='.9';cur2.style.transform='scale(1.5)'});
-  el.addEventListener('mouseleave',()=>{cur.style.transform='scale(1)';cur2.style.opacity='.5';cur2.style.transform='scale(1)'});
-});
+// ---- DATA ----
+const glassesData = [
+  {
+    id: 1, name: "The Architect", category: "classic", price: 289,
+    desc: "Angular acetate frames with a modernist edge. Designed for thinkers who build worlds.",
+    tags: ["Acetate", "Rectangular", "Unisex"], colors: ["#1a1a1a", "#6B4226", "#2B4B7E"],
+    badge: "new", material: "Premium Acetate",
+    fit: "Medium", weight: "28g", origin: "Italy",
+    svgColor: "#2B4B7E", svgAlt: "#5A8BC4",
+    shape: "rect"
+  },
+  {
+    id: 2, name: "The Aviator", category: "classic", price: 340,
+    desc: "The icon, reimagined. Double bridge, teardrop lenses, a silhouette born for altitude.",
+    tags: ["Metal", "Pilot", "Unisex"], colors: ["#C9973A", "#C0C0C0", "#1a1a1a"],
+    badge: null, material: "Titanium",
+    fit: "Large", weight: "22g", origin: "Germany",
+    svgColor: "#C9973A", svgAlt: "#E8C47A",
+    shape: "aviator"
+  },
+  {
+    id: 3, name: "The Visionary", category: "fashion", price: 420,
+    desc: "Oversize hexagonal frames that make every room take notice. Fashion-forward, unapologetically bold.",
+    tags: ["Acetate", "Hexagonal", "Statement"], colors: ["#8B0000", "#1a1a1a", "#2C4A2C"],
+    badge: "new", material: "Handcut Acetate",
+    fit: "Oversize", weight: "32g", origin: "France",
+    svgColor: "#8B0000", svgAlt: "#C84040",
+    shape: "hex"
+  },
+  {
+    id: 4, name: "The Scholar", category: "reading", price: 195,
+    desc: "Classic round frames in warm tortoise. For those who find wisdom in the margins of old books.",
+    tags: ["Acetate", "Round", "Unisex"], colors: ["#8B6914", "#3D2B1F", "#1a1a1a"],
+    badge: null, material: "Bio-Acetate",
+    fit: "Small", weight: "24g", origin: "Japan",
+    svgColor: "#8B6914", svgAlt: "#C9973A",
+    shape: "round"
+  },
+  {
+    id: 5, name: "The Racer", category: "sport", price: 375,
+    desc: "Wraparound sport shield with polarized lenses. Zero wind resistance. Maximum vision.",
+    tags: ["TR90", "Wraparound", "Sport"], colors: ["#0A0A0A", "#E63946", "#2962FF"],
+    badge: null, material: "TR90 Nylon",
+    fit: "Large", weight: "18g", origin: "USA",
+    svgColor: "#1a1a1a", svgAlt: "#E63946",
+    shape: "wrap"
+  },
+  {
+    id: 6, name: "The Luminary", category: "luxury", price: 890,
+    desc: "24k gold-plated titanium, handset with Swarovski accents. For evenings that demand perfection.",
+    tags: ["Titanium", "Gold", "Luxury"], colors: ["#C9973A", "#E8C47A", "#FFF8E1"],
+    badge: "new", material: "18k Gold Titanium",
+    fit: "Medium", weight: "19g", origin: "Switzerland",
+    svgColor: "#C9973A", svgAlt: "#FFD700",
+    shape: "cat"
+  },
+  {
+    id: 7, name: "The Cat Eye", category: "fashion", price: 260,
+    desc: "Swept-up corners that lift the gaze. A nod to the golden age of Hollywood glamour.",
+    tags: ["Acetate", "Cat Eye", "Women"], colors: ["#1a1a1a", "#8B0000", "#3D1A78"],
+    badge: null, material: "Cellulose Acetate",
+    fit: "Medium", weight: "26g", origin: "Italy",
+    svgColor: "#3D1A78", svgAlt: "#7B4FBF",
+    shape: "cat"
+  },
+  {
+    id: 8, name: "The Climber", category: "sport", price: 310,
+    desc: "Lightweight nylon with rubberized grip. From base camp to summit — reliability in every condition.",
+    tags: ["Nylon", "Sport", "Unisex"], colors: ["#1a3a1a", "#1a1a1a", "#C9973A"],
+    badge: null, material: "Nylon + Rubber",
+    fit: "Large", weight: "17g", origin: "Austria",
+    svgColor: "#1a3a1a", svgAlt: "#3A6B3A",
+    shape: "sport"
+  },
+  {
+    id: 9, name: "The Minimalist", category: "luxury", price: 650,
+    desc: "Frameless precision. Titanium screws, sapphire-coated lenses. The art of nothing extra.",
+    tags: ["Titanium", "Rimless", "Premium"], colors: ["#C0C0C0", "#C9973A", "#1a1a1a"],
+    badge: null, material: "Beta Titanium",
+    fit: "Medium", weight: "14g", origin: "Japan",
+    svgColor: "#C0C0C0", svgAlt: "#E8E8E8",
+    shape: "rimless"
+  },
+  {
+    id: 10, name: "The Browline", category: "classic", price: 225,
+    desc: "Half-frame heritage with a contemporary twist. The brow bar does all the talking.",
+    tags: ["Mixed", "Browline", "Vintage"], colors: ["#1a1a1a", "#6B4226", "#C9973A"],
+    badge: null, material: "Acetate + Metal",
+    fit: "Medium", weight: "25g", origin: "Germany",
+    svgColor: "#6B4226", svgAlt: "#C9973A",
+    shape: "browline"
+  },
+  {
+    id: 11, name: "The Wayfarer", category: "classic", price: 245,
+    desc: "The silhouette that defined a generation. Thick acetate, wide temple — a permanent icon.",
+    tags: ["Acetate", "Wayfarer", "Unisex"], colors: ["#1a1a1a", "#6B4226", "#1a2a4a"],
+    badge: null, material: "Cellulose Acetate",
+    fit: "Medium", weight: "30g", origin: "USA",
+    svgColor: "#1a1a1a", svgAlt: "#3A3A3A",
+    shape: "wayfarer"
+  },
+  {
+    id: 12, name: "The Oval", category: "reading", price: 180,
+    desc: "Soft oval silhouette in delicate wire. The most flattering frame for any face shape.",
+    tags: ["Metal", "Oval", "Unisex"], colors: ["#C9973A", "#C0C0C0", "#1a1a1a"],
+    badge: "sale", material: "Stainless Steel",
+    fit: "Small", weight: "20g", origin: "South Korea",
+    svgColor: "#C9973A", svgAlt: "#E8C47A",
+    shape: "oval"
+  },
+  {
+    id: 13, name: "The Shield", category: "sport", price: 395,
+    desc: "One-piece panoramic lens. A visor for the modern explorer. Polarized, impact-resistant.",
+    tags: ["PC", "Shield", "Sport"], colors: ["#1a1a1a", "#2962FF", "#E63946"],
+    badge: "new", material: "Polycarbonate",
+    fit: "Oversize", weight: "22g", origin: "USA",
+    svgColor: "#2962FF", svgAlt: "#5A8BC4",
+    shape: "shield"
+  },
+  {
+    id: 14, name: "The Pince-Nez", category: "luxury", price: 720,
+    desc: "No temples, no compromise. Pinched at the nose, freed from the ear. Truly extraordinary.",
+    tags: ["Gold", "Rimless", "Heritage"], colors: ["#C9973A", "#C0C0C0"],
+    badge: null, material: "14k Gold Frame",
+    fit: "Medium", weight: "12g", origin: "France",
+    svgColor: "#C9973A", svgAlt: "#FFD700",
+    shape: "pincenez"
+  },
+  {
+    id: 15, name: "The Pentagon", category: "fashion", price: 315,
+    desc: "Five-sided frames that break every rule. For those whose geometry is entirely their own.",
+    tags: ["Acetate", "Pentagon", "Statement"], colors: ["#2C4A2C", "#8B0000", "#1a1a1a"],
+    badge: "new", material: "Thick Acetate",
+    fit: "Medium", weight: "31g", origin: "UK",
+    svgColor: "#2C4A2C", svgAlt: "#4A8A4A",
+    shape: "hex"
+  },
+  {
+    id: 16, name: "The Navigator", category: "classic", price: 270,
+    desc: "Square frames with subtle keyhole bridge. A navigator's precision in every detail.",
+    tags: ["Metal", "Square", "Unisex"], colors: ["#C0C0C0", "#C9973A", "#1a1a1a"],
+    badge: null, material: "Titanium Alloy",
+    fit: "Large", weight: "21g", origin: "Germany",
+    svgColor: "#C0C0C0", svgAlt: "#E8E8E8",
+    shape: "rect"
+  }
+];
 
-// ——— Category Tabs ———
-document.querySelectorAll('.cat-tab').forEach(tab=>{
-  tab.addEventListener('click',()=>{
-    document.querySelectorAll('.cat-tab').forEach(t=>t.classList.remove('active'));
-    document.querySelectorAll('.page-section').forEach(s=>s.classList.remove('active'));
-    tab.classList.add('active');
-    const cat = tab.dataset.cat;
-    const section = document.getElementById(cat+'-section');
-    if(section) section.classList.add('active');
-    // scroll to content
-    document.querySelector('.content-area').scrollIntoView({behavior:'smooth',block:'start'});
-  });
-});
+const lensTypes = [
+  { icon: "🔭", name: "Single Vision", desc: "Corrects one field of vision — near or distance. The most prescribed lens worldwide, now thinner than ever." },
+  { icon: "🌊", name: "Progressive", desc: "Seamlessly blends three focal zones. No visible lines, no compromise — the premium choice for presbyopia." },
+  { icon: "☀️", name: "Polarized", desc: "Eliminates horizontal glare with surgical precision. Essential for driving, water, and snow environments." },
+  { icon: "💻", name: "Blue Light Filter", desc: "Blocks high-energy visible light from screens. Reduces eye strain and protects melatonin cycles." },
+  { icon: "🔬", name: "Bifocal", desc: "Two distinct optical zones in one lens. Classic and reliable for both near and distance correction." },
+  { icon: "🌓", name: "Photochromic", desc: "Adapts from clear indoors to dark outdoors within seconds. One pair for every light condition." },
+  { icon: "⚡", name: "Polycarbonate", desc: "10× more impact-resistant than standard lenses. Mandatory for sport and children's eyewear." },
+  { icon: "✨", name: "Anti-Reflective", desc: "Multi-layer coating eliminates ghost reflections. Dramatically improves night vision and screen use." }
+];
 
-// ——— Genre Filter (per section) ———
-document.querySelectorAll('.genre-bar').forEach(bar=>{
-  bar.querySelectorAll('.genre-pill').forEach(pill=>{
-    pill.addEventListener('click',()=>{
-      bar.querySelectorAll('.genre-pill').forEach(p=>p.classList.remove('active'));
-      pill.classList.add('active');
-      const genre = pill.dataset.genre;
-      // find parent section and filter cards
-      const section = pill.closest('.page-section');
-      if(!section) return;
-      section.querySelectorAll('.movie-card').forEach(card=>{
-        if(genre==='all'||card.dataset.genre===genre||!card.dataset.genre){
-          card.style.display='block';
-        } else {
-          card.style.display='none';
-        }
-      });
+const materials = [
+  { icon: "🔩", name: "Titanium", desc: "The strongest-to-weight ratio in eyewear. Hypoallergenic, corrosion-resistant, and feather-light. The material of aerospace and fine frames alike." },
+  { icon: "🎨", name: "Cellulose Acetate", desc: "Plant-derived and hand-polished. Richer color depth than any plastic, with a warmth that improves with age. The gold standard of premium frames." },
+  { icon: "🌿", name: "Bio-Acetate", desc: "All the beauty of traditional acetate, made from sustainable plant cellulose. Biodegradable, transparent supply chain, zero compromise on quality." },
+  { icon: "🏆", name: "Beta Titanium", desc: "An aerospace alloy with spring-memory properties. Survives being sat on. Returns to perfect shape. Favored by Japanese artisans." },
+  { icon: "💎", name: "Stainless Steel", desc: "Precise, polished, and permanent. Surgical-grade stainless offers clean minimalism at accessible price points without sacrificing durability." },
+  { icon: "⚗️", name: "TR90 Nylon", desc: "Swiss-engineered thermoplastic. Rubber-flexible at arctic temperatures, rigid in heat. The defining material of performance sports eyewear." }
+];
+
+// ---- SVG FRAME GENERATORS ----
+function getFrameSVG(shape, c1, c2, size = 220) {
+  const s = size;
+  switch(shape) {
+    case 'rect': return `<svg viewBox="0 0 ${s} ${s*.55}" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="10" y="20" width="90" height="60" rx="6" stroke="${c1}" stroke-width="8" fill="none"/>
+      <rect x="120" y="20" width="90" height="60" rx="6" stroke="${c1}" stroke-width="8" fill="none"/>
+      <line x1="100" y1="50" x2="120" y2="50" stroke="${c2}" stroke-width="4"/>
+      <line x1="5" y1="42" x2="10" y2="50" stroke="${c1}" stroke-width="5" stroke-linecap="round"/>
+      <line x1="215" y1="42" x2="210" y2="50" stroke="${c1}" stroke-width="5" stroke-linecap="round"/>
+    </svg>`;
+    case 'round': return `<svg viewBox="0 0 ${s} ${s*.6}" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="65" cy="50" r="42" stroke="${c1}" stroke-width="8" fill="none"/>
+      <circle cx="155" cy="50" r="42" stroke="${c1}" stroke-width="8" fill="none"/>
+      <line x1="107" y1="50" x2="113" y2="50" stroke="${c2}" stroke-width="5"/>
+      <line x1="3" y1="38" x2="23" y2="46" stroke="${c1}" stroke-width="5" stroke-linecap="round"/>
+      <line x1="217" y1="38" x2="197" y2="46" stroke="${c1}" stroke-width="5" stroke-linecap="round"/>
+    </svg>`;
+    case 'aviator': return `<svg viewBox="0 0 ${s} ${s*.65}" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M15 25 Q55 10 95 40 Q95 75 55 80 Q15 75 15 45 Z" stroke="${c1}" stroke-width="7" fill="none"/>
+      <path d="M125 25 Q165 10 205 25 Q205 75 165 80 Q125 75 125 45 Z" stroke="${c1}" stroke-width="7" fill="none"/>
+      <line x1="68" y1="22" x2="88" y2="28" stroke="${c2}" stroke-width="4"/>
+      <line x1="95" y1="40" x2="125" y2="40" stroke="${c2}" stroke-width="4"/>
+      <line x1="68" y1="22" x2="152" y2="22" stroke="${c2}" stroke-width="3"/>
+      <line x1="3" y1="22" x2="15" y2="30" stroke="${c1}" stroke-width="5" stroke-linecap="round"/>
+      <line x1="217" y1="22" x2="205" y2="30" stroke="${c1}" stroke-width="5" stroke-linecap="round"/>
+    </svg>`;
+    case 'cat': return `<svg viewBox="0 0 ${s} ${s*.55}" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M15 50 Q20 20 65 15 Q95 12 100 40 Q98 65 65 68 Q30 68 15 50Z" stroke="${c1}" stroke-width="8" fill="none"/>
+      <path d="M120 40 Q125 12 165 15 Q205 12 210 40 Q210 68 175 68 Q130 65 120 40Z" stroke="${c1}" stroke-width="8" fill="none"/>
+      <line x1="100" y1="40" x2="120" y2="40" stroke="${c2}" stroke-width="4"/>
+      <line x1="3" y1="32" x2="15" y2="46" stroke="${c1}" stroke-width="5" stroke-linecap="round"/>
+      <line x1="217" y1="26" x2="210" y2="38" stroke="${c1}" stroke-width="5" stroke-linecap="round"/>
+    </svg>`;
+    case 'hex': return `<svg viewBox="0 0 ${s} ${s*.6}" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="30,20 70,10 100,20 100,60 70,72 30,60" stroke="${c1}" stroke-width="8" fill="none" stroke-linejoin="round"/>
+      <polygon points="120,20 160,10 192,20 192,60 160,72 120,60" stroke="${c1}" stroke-width="8" fill="none" stroke-linejoin="round"/>
+      <line x1="100" y1="40" x2="120" y2="40" stroke="${c2}" stroke-width="4"/>
+      <line x1="4" y1="36" x2="30" y2="38" stroke="${c1}" stroke-width="5" stroke-linecap="round"/>
+      <line x1="216" y1="36" x2="192" y2="38" stroke="${c1}" stroke-width="5" stroke-linecap="round"/>
+    </svg>`;
+    case 'wayfarer': return `<svg viewBox="0 0 ${s} ${s*.6}" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 20 L98 18 L102 65 Q80 72 45 68 Q12 62 10 42Z" stroke="${c1}" stroke-width="9" fill="none"/>
+      <path d="M122 18 L210 20 L210 42 Q208 62 175 68 Q140 72 118 65 Z" stroke="${c1}" stroke-width="9" fill="none"/>
+      <line x1="98" y1="40" x2="122" y2="40" stroke="${c2}" stroke-width="5"/>
+      <line x1="2" y1="26" x2="10" y2="30" stroke="${c1}" stroke-width="5" stroke-linecap="round"/>
+      <line x1="218" y1="26" x2="210" y2="30" stroke="${c1}" stroke-width="5" stroke-linecap="round"/>
+    </svg>`;
+    case 'wrap': return `<svg viewBox="0 0 ${s} ${s*.55}" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 35 Q30 10 100 22 Q120 25 115 52 Q85 68 30 60 Q5 52 5 35Z" stroke="${c1}" stroke-width="8" fill="${c1}" fill-opacity="0.08"/>
+      <path d="M115 22 Q180 10 215 35 Q215 52 190 60 Q140 68 105 52 Q110 25 115 22Z" stroke="${c1}" stroke-width="8" fill="${c1}" fill-opacity="0.08"/>
+      <line x1="5" y1="38" x2="2" y2="36" stroke="${c1}" stroke-width="5" stroke-linecap="round"/>
+      <line x1="215" y1="38" x2="218" y2="36" stroke="${c1}" stroke-width="5" stroke-linecap="round"/>
+    </svg>`;
+    case 'browline': return `<svg viewBox="0 0 ${s} ${s*.6}" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 22 Q55 12 100 22" stroke="${c1}" stroke-width="12" fill="none" stroke-linecap="round"/>
+      <path d="M120 22 Q165 12 210 22" stroke="${c1}" stroke-width="12" fill="none" stroke-linecap="round"/>
+      <path d="M14 25 Q55 60 98 58 Q100 50 100 36 Q100 22 55 22 Q14 22 14 25" stroke="${c2}" stroke-width="4" fill="none"/>
+      <path d="M122 25 Q165 60 206 58 Q210 50 210 36 Q210 22 165 22 Q122 22 122 25" stroke="${c2}" stroke-width="4" fill="none"/>
+      <line x1="100" y1="40" x2="120" y2="40" stroke="${c2}" stroke-width="4"/>
+      <line x1="2" y1="26" x2="12" y2="26" stroke="${c1}" stroke-width="5" stroke-linecap="round"/>
+      <line x1="218" y1="26" x2="208" y2="26" stroke="${c1}" stroke-width="5" stroke-linecap="round"/>
+    </svg>`;
+    case 'rimless': return `<svg viewBox="0 0 ${s} ${s*.55}" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="60" cy="45" rx="44" ry="30" stroke="${c1}" stroke-width="2" fill="none" stroke-dasharray="4 2" opacity="0.5"/>
+      <ellipse cx="160" cy="45" rx="44" ry="30" stroke="${c1}" stroke-width="2" fill="none" stroke-dasharray="4 2" opacity="0.5"/>
+      <circle cx="60" cy="30" r="4" fill="${c2}"/>
+      <circle cx="76" cy="20" r="4" fill="${c2}"/>
+      <circle cx="44" cy="20" r="4" fill="${c2}"/>
+      <circle cx="160" cy="30" r="4" fill="${c2}"/>
+      <circle cx="176" cy="20" r="4" fill="${c2}"/>
+      <circle cx="144" cy="20" r="4" fill="${c2}"/>
+      <line x1="104" y1="42" x2="116" y2="42" stroke="${c1}" stroke-width="2"/>
+      <line x1="2" y1="34" x2="16" y2="36" stroke="${c1}" stroke-width="2" stroke-linecap="round"/>
+      <line x1="218" y1="34" x2="204" y2="36" stroke="${c1}" stroke-width="2" stroke-linecap="round"/>
+    </svg>`;
+    case 'oval': return `<svg viewBox="0 0 ${s} ${s*.55}" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="62" cy="45" rx="48" ry="32" stroke="${c1}" stroke-width="6" fill="none"/>
+      <ellipse cx="158" cy="45" rx="48" ry="32" stroke="${c1}" stroke-width="6" fill="none"/>
+      <line x1="110" y1="43" x2="110" y2="43" stroke="${c2}" stroke-width="4"/>
+      <line x1="108" y1="46" x2="112" y2="46" stroke="${c2}" stroke-width="4"/>
+      <line x1="2" y1="36" x2="14" y2="40" stroke="${c1}" stroke-width="5" stroke-linecap="round"/>
+      <line x1="218" y1="36" x2="206" y2="40" stroke="${c1}" stroke-width="5" stroke-linecap="round"/>
+    </svg>`;
+    case 'shield': return `<svg viewBox="0 0 ${s} ${s*.5}" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 20 Q110 5 212 20 L212 55 Q110 75 8 55 Z" stroke="${c1}" stroke-width="8" fill="${c1}" fill-opacity="0.1"/>
+      <line x1="110" y1="5" x2="110" y2="75" stroke="${c2}" stroke-width="2" opacity="0.4"/>
+      <line x1="2" y1="35" x2="8" y2="38" stroke="${c1}" stroke-width="5" stroke-linecap="round"/>
+      <line x1="218" y1="35" x2="212" y2="38" stroke="${c1}" stroke-width="5" stroke-linecap="round"/>
+    </svg>`;
+    case 'pincenez': return `<svg viewBox="0 0 ${s} ${s*.5}" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="65" cy="40" rx="48" ry="30" stroke="${c1}" stroke-width="5" fill="none"/>
+      <ellipse cx="155" cy="40" rx="48" ry="30" stroke="${c1}" stroke-width="5" fill="none"/>
+      <path d="M113 35 Q110 25 107 35" stroke="${c2}" stroke-width="4" fill="none"/>
+      <line x1="107" y1="40" x2="113" y2="40" stroke="${c2}" stroke-width="4"/>
+    </svg>`;
+    case 'sport': return `<svg viewBox="0 0 ${s} ${s*.55}" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 30 Q45 10 95 25 Q100 45 85 58 Q50 68 18 55 Q5 45 8 30Z" stroke="${c1}" stroke-width="7" fill="${c1}" fill-opacity="0.08"/>
+      <path d="M125 25 Q170 10 212 30 Q215 45 202 55 Q170 68 135 58 Q120 45 125 25Z" stroke="${c1}" stroke-width="7" fill="${c1}" fill-opacity="0.08"/>
+      <line x1="95" y1="36" x2="125" y2="36" stroke="${c2}" stroke-width="4"/>
+      <line x1="2" y1="32" x2="8" y2="36" stroke="${c1}" stroke-width="5" stroke-linecap="round"/>
+      <line x1="218" y1="32" x2="212" y2="36" stroke="${c1}" stroke-width="5" stroke-linecap="round"/>
+    </svg>`;
+    default: return `<svg viewBox="0 0 ${s} ${s*.55}"><text fill="${c1}" x="10" y="40">${shape}</text></svg>`;
+  }
+}
+
+// ---- RENDER GLASSES GRID ----
+function renderGrid(filter = 'all') {
+  const grid = document.getElementById('glassesGrid');
+  const items = filter === 'all' ? glassesData : glassesData.filter(g => g.category === filter);
+  grid.innerHTML = items.map(g => `
+    <div class="glass-card" data-id="${g.id}" data-cat="${g.category}">
+      ${g.badge === 'new' ? '<div class="badge-new">New</div>' : ''}
+      ${g.badge === 'sale' ? '<div class="badge-sale">Sale</div>' : ''}
+      <div class="card-inner">
+        <div class="card-category">${g.category.charAt(0).toUpperCase() + g.category.slice(1)} Eyewear</div>
+        <div class="card-frame-wrap">
+          <div class="card-frame-svg">${getFrameSVG(g.shape, g.svgColor, g.svgAlt)}</div>
+        </div>
+        <div class="card-name">${g.name}</div>
+        <div class="card-tags">${g.tags.map(t => `<span class="card-tag">${t}</span>`).join('')}</div>
+        <div class="card-desc">${g.desc}</div>
+        <div class="card-colors">${g.colors.map(c => `<div class="color-dot" style="background:${c}" title="${c}"></div>`).join('')}</div>
+        <div class="card-footer">
+          <div class="card-price">$${g.price} <span>USD</span></div>
+          <button class="card-add" data-id="${g.id}" title="Add to wishlist">+</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // Card click → modal
+  grid.querySelectorAll('.glass-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (e.target.classList.contains('card-add')) return;
+      const id = parseInt(card.dataset.id);
+      openModal(id);
     });
   });
+
+  // Add button
+  grid.querySelectorAll('.card-add').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showToast();
+    });
+  });
+}
+
+// ---- FILTERS ----
+document.getElementById('filterTabs').addEventListener('click', (e) => {
+  if (!e.target.classList.contains('filter-tab')) return;
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  e.target.classList.add('active');
+  renderGrid(e.target.dataset.filter);
 });
 
-// ——— Scroll Reveal ———
-const obs = new IntersectionObserver(entries=>{
-  entries.forEach((e,i)=>{
-    if(e.isIntersecting){
-      setTimeout(()=>e.target.classList.add('in'), i*80);
-      obs.unobserve(e.target);
-    }
-  });
-},{threshold:.08});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+// ---- LENS TYPES ----
+document.getElementById('lensGrid').innerHTML = lensTypes.map(l => `
+  <div class="lens-card">
+    <div class="lens-icon">${l.icon}</div>
+    <div class="lens-name">${l.name}</div>
+    <p class="lens-desc">${l.desc}</p>
+  </div>
+`).join('');
+
+// ---- MATERIALS ----
+document.getElementById('materialsGrid').innerHTML = materials.map(m => `
+  <div class="material-item">
+    <div class="material-visual">${m.icon}</div>
+    <div class="material-name">${m.name}</div>
+    <p class="material-desc">${m.desc}</p>
+  </div>
+`).join('');
+
+// ---- MARQUEE ----
+const marqueeItems = ['Optical Frames', 'Sunglasses', 'Sport Eyewear', 'Blue Light Protection', 'Luxury Titanium', 'Handcrafted Acetate', 'Progressive Lenses', 'Polarized Optics'];
+const track = document.getElementById('marqueeTrack');
+const content = marqueeItems.map(i => `<span class="marquee-item">${i}<span class="marquee-dot"></span></span>`).join('');
+track.innerHTML = content + content; // duplicate for seamless loop
+
+// ---- MODAL ----
+function openModal(id) {
+  const g = glassesData.find(x => x.id === id);
+  if (!g) return;
+  document.getElementById('modalVisual').innerHTML = `<div class="modal-svg">${getFrameSVG(g.shape, g.svgColor, g.svgAlt, 280)}</div>`;
+  document.getElementById('modalInfo').innerHTML = `
+    <div class="modal-category">${g.category} Eyewear</div>
+    <div class="modal-name">${g.name}</div>
+    <p class="modal-desc">${g.desc}</p>
+    <div class="modal-specs">
+      <div class="spec-item"><div class="spec-label">Material</div><div class="spec-val">${g.material}</div></div>
+      <div class="spec-item"><div class="spec-label">Fit</div><div class="spec-val">${g.fit}</div></div>
+      <div class="spec-item"><div class="spec-label">Weight</div><div class="spec-val">${g.weight}</div></div>
+      <div class="spec-item"><div class="spec-label">Origin</div><div class="spec-val">${g.origin}</div></div>
+    </div>
+    <div class="modal-price">$${g.price} <span style="font-size:0.8rem;color:var(--text-muted);font-family:'Inter',sans-serif">USD</span></div>
+    <button class="modal-btn" onclick="showToast()">Add to Collection</button>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+document.getElementById('modalClose').addEventListener('click', () => {
+  document.getElementById('modalOverlay').classList.remove('open');
+});
+document.getElementById('modalOverlay').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('modalOverlay')) {
+    document.getElementById('modalOverlay').classList.remove('open');
+  }
+});
+
+// ---- TOAST ----
+function showToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+// ---- CURSOR ----
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+  setTimeout(() => {
+    ring.style.left = e.clientX + 'px';
+    ring.style.top = e.clientY + 'px';
+  }, 60);
+});
+document.querySelectorAll('a, button, .glass-card, .filter-tab, .lens-card, .color-dot').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.classList.add('hovered'); ring.classList.add('hovered'); });
+  el.addEventListener('mouseleave', () => { cursor.classList.remove('hovered'); ring.classList.remove('hovered'); });
+});
+
+// ---- INIT ----
+renderGrid();
 </script>
 </body>
 </html>
